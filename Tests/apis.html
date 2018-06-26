@@ -18,9 +18,10 @@
   <input type="submit" value="submit" id="AddIngredients">
 
   <div id="recipies"></div>
-  <button id="moreButton">More</button>
-
-
+  <div id="browseButton">
+    <button id="lessButton">Less</button>
+    <button id="moreButton">More</button>
+  </div>
 
   <script type="text/javascript">
     var storeResponse;
@@ -29,9 +30,18 @@
 
     var logic = {
 
-      start: function() {
-        //Hides 'moreButton' at the beginning
-        $("#moreButton").hide();
+      magicButton: function() {
+        //Shows the more button while the countStart < 90.
+        if (countStart === 0) {
+          $("#browseButton").hide();
+        } else if (countStart === 10) {
+          $("#browseButton").show();
+          $("#lessButton").hide();
+        } else if (countStart >10 && countStart < 90) {
+          $("#lessButton").show();
+        } else { //Otherwhise hide it.
+          $("#browseButton").hide();
+        }
       },
 
       edamamGet: function() {
@@ -71,8 +81,6 @@
 
         //Cleans DIV to show results.
         $("#recipies").empty();
-
-
         //Run for loop to print 10 recipies.
         for (countStart; countStart < countEnd; countStart++) {
 
@@ -80,26 +88,31 @@
           var pTag = $("<p>");
           var aTag = $("<a>");
           aTag.attr("href", storeResponse.hits[countStart].recipe.url)
+          aTag.attr("target", "_blank");
           aTag.append("", storeResponse.hits[countStart].recipe.label);
           pTag.append(aTag);
           $("#recipies").append(pTag);
         }
 
-        //Shows the more button while the countStart < 90.
-        if (countStart < 90) {
-          $("#moreButton").show();
-        }
-        else { //Otherwhise hide it.
-          $("#moreButton").hide();
-        }
-         //Increase countEnd by 10 to be ready to print 10 more items.
+        //Call function to check if show or hide the "more button"
+        logic.magicButton();
+      },
+
+      moreRecipies: function() {
         countEnd += 10;
+        logic.printEdamam();
+      },
+
+      lessRecipies: function() {
+        countEnd -= 10;
+        countStart -= 20;
+        logic.printEdamam();
       }
 
     };
 
     //Execute the start function
-    logic.start();
+    logic.magicButton();
 
     //Click on "Submit" button.
     $("#AddIngredients").on("click", function() {
@@ -108,8 +121,12 @@
     })
 
     $("#moreButton").on("click", function() {
-      logic.printEdamam(); //Calls printer to show 10 new recipes.
+      logic.moreRecipies(); //Calls printer to show 10 new recipes.
     });
+
+    $("#lessButton").on("click", function() {
+      logic.lessRecipies();
+    })
   </script>
 
 </body>
