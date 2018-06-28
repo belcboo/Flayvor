@@ -1,0 +1,61 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+   background-image: url('');
+   /* background-color: #E9ECE5; */
+    
+}
+
+.nav-wrapper, .nav, footer.page-footer {
+    background-color: #E9ECE5;
+}
+
+#start {
+    margin-top: 0px;
+    padding: 0px;
+}
+
+#logo {
+    display: block;
+    
+}
+
+img.logo {
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+#buttons-window {
+    background-color: #E9ECE5;
+    
+}
+
+#instructions {
+    background-color: white;
+}
+
+.instructions-icon {
+    max-width: 75px;
+  
+}
+.parallax-container {
+    min-height: 380px;
+    
+}
+
+#contact-us {
+     background-color: #E9ECE5;
+}
+.main-container {
+    background-color: #E9ECE5;
+}
+
+.footer-container {
+    background-color: #A5A59F;
+    margin-top: 0px;
+    padding-top: 0px;
+}
