@@ -13,9 +13,19 @@
 
 <body>
 
-  <label for="ingredients">Add your ingredients</label>
-  <input id="ingredients" type="text">
-  <input type="submit" value="submit" id="AddIngredients">
+  <div id="buttons">
+    <button id="food">Food</button>
+    <button id="drink">Drink</button>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div id="typer">
+    <label for="ingredients">Add your ingredients</label>
+    <input id="ingredients" type="text">
+    <input type="submit" value="submit" id="AddIngredients">
+  </div>
+
 
   <div id="recipies"></div>
   <div id="browseButton">
@@ -23,28 +33,37 @@
     <button id="moreButton">More</button>
   </div>
 
+
+
   <script type="text/javascript">
     var storeResponse;
+
     var countStart = 0;
     var countEnd = 10;
+    var type = "";
 
-    var logic = {
+    var general = {
 
       magicButton: function() {
         //Shows the more button while the countStart < 90.
         if (countStart === 0) {
           $("#browseButton").hide();
+          $("#typer").hide();
         } else if (countStart === 10) {
           $("#browseButton").show();
           $("#lessButton").hide();
-        } else if (countStart >10 && countStart < 90) {
+        } else if (countStart > 10 && countStart < 90) {
           $("#lessButton").show();
         } else { //Otherwhise hide it.
           $("#browseButton").hide();
         }
       },
 
-      edamamGet: function() {
+    }
+
+    var food = {
+
+      pull: function() {
 
         //Returns countStart to 0
         countStart += 0;
@@ -60,6 +79,7 @@
 
         $("#ingredients").val("");
 
+        console.log(queryUrl);
         //Using ajax to get the json that contains the recipies.
         $.ajax({
           url: queryUrl,
@@ -77,7 +97,7 @@
         })
       },
 
-      printEdamam: function() {
+      print: function() {
 
         //Cleans DIV to show results.
         $("#recipies").empty();
@@ -95,37 +115,124 @@
         }
 
         //Call function to check if show or hide the "more button"
-        logic.magicButton();
+        general.magicButton();
       },
 
-      moreRecipies: function() {
+      //Shows 10 more recipies.
+      more: function() {
         countEnd += 10;
-        logic.printEdamam();
+        food.print();
       },
 
-      lessRecipies: function() {
+      //Goes back 10 recipes.
+      less: function() {
         countEnd -= 10;
         countStart -= 20;
-        logic.printEdamam();
+        food.print();
       }
 
     };
 
+    var drinks = {
+
+      pull: function() {
+        //https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka
+
+        var ingredients = $("#ingredients").val().trim();
+
+        var uri = "https://thecocktaildb.com/api/json/v1/1/filter.php?i=";
+
+        var queryUrl = uri + ingredients;
+
+        $("#ingredients").val("");
+
+        console.log(queryUrl);
+        //Using ajax to get the json that contains the recipies.
+        $.ajax({
+          url: queryUrl,
+          method: "GET"
+        }).then(function(response) { //Stores the JSON obtained in the temp variable "response"
+
+          //Saves JSON response to local variable in case we need to use response in the future.
+          storeResponse = response;
+
+          //Clean textbox.
+
+          console.log(storeResponse);
+          //Calls the "printer"
+          drinks.print();
+        })
+
+      },
+
+      print: function() {
+
+        $("#recipies").empty();
+
+
+        for (countStart; countStart < countEnd; countStart++) {
+
+
+          //Create link for 10 recipies inside a p tag.
+          var pTag = $("<p>");
+          var aTag = $("<a>");
+          aTag.attr("drinkid", storeResponse.drinks[countStart].idDrink)
+          aTag.append("", storeResponse.drinks[countStart].strDrink);
+          pTag.append(aTag);
+          $("#recipies").append(pTag);
+        }
+
+
+        general.magicButton();
+
+
+      },
+
+      more: function(){
+        
+      }
+
+
+    }
     //Execute the start function
-    logic.magicButton();
+    general.magicButton();
 
     //Click on "Submit" button.
     $("#AddIngredients").on("click", function() {
-      //Calls functoin to pull data from edamam API.
-      logic.edamamGet();
+
+      if (type === "food") {
+        food.pull();
+      } else {
+        drinks.pull();
+      }
     })
 
     $("#moreButton").on("click", function() {
-      logic.moreRecipies(); //Calls printer to show 10 new recipes.
+      if (type === "food") {
+        food.more();
+      } else {
+        drinks.more();
+      }
     });
 
     $("#lessButton").on("click", function() {
-      logic.lessRecipies();
+      if (type === "food") {
+        food.less();
+      } else {
+        drinks.less();
+      }
+    })
+
+    $("#food").on('click', function() {
+      type = "food"
+      $("#buttons").hide();
+      $("#typer").show();
+    })
+
+    $("#drink").on('click', function() {
+      type = "drinks";
+      $("#buttons").hide();
+      $("#typer").show();
     })
   </script>
 
