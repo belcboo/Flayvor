@@ -12,8 +12,10 @@ $(document).ready(function () {
     firebase.initializeApp(config);
     var database = firebase.database();
     //Create new child to ref database
-    database.ref().on("child_added", function (snapshot) {
+    database.ref("top5").on("child_added", function (snapshot) {
         var ingredient = snapshot.val().ingredient;
+
+
     });
 
 
@@ -33,7 +35,7 @@ $(document).ready(function () {
             //Returns countStart to 0
             countStart += 0;
             //Assign text typed by user to variable ingridients.
-            var ingredients = $("#ingredients").val().trim();
+            var ingredients = $("#typeIngredient").val().trim();
             //Default start of API Url
             var Uri = " https://api.edamam.com/search?q="
             //Default end of the API Url.
@@ -42,7 +44,7 @@ $(document).ready(function () {
             //Merge the start + the ingridients typed by user + the end of the API Url.
             var queryUrl = Uri + ingredients + Api;
 
-            $("#ingredients").val().trim();
+            $("#typeIngredient").val().trim();
 
             //Using ajax to get the json that contains the recipies.
             $.ajax({
@@ -96,19 +98,19 @@ $(document).ready(function () {
     logic.start();
 
     //Click on "Submit" button.
-    $("#AddIngredients").on("click", function () {
+    $("#flavorize-button").on("click", function () {
         //Calls functoin to pull data from edamam API.
         logic.edamamGet();
 
 
         //Created new name and value in firebase, using Submit button
-        var ingredientDb = $("#ingredients").val().trim();
+        var ingredientDb = $("#flavorize-button").val().trim();
         var savedSearch = {
 
             ingredient: ingredientDb
         }
         //pushing to firebase
-        database.ref().push(savedSearch);
+        database.ref("top5").push(savedSearch);
 
     })
 
