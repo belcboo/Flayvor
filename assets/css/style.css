@@ -33,6 +33,13 @@ body {
     background-color: #5B7C8B;
 }
 
+#instructions {
+   
+   padding: 20px;
+   background-color: #5B7C8B;
+   
+}
+
 /* .parallax-container {
     height: 500px;
   } */
@@ -94,10 +101,7 @@ body {
     width: 50%;
 }
 
-.instructionsDiv {
-   
-    
-}
+
 
 #card-img {
     background-image: url('');
@@ -154,10 +158,10 @@ body {
     
 }
 
-.instructions-icon {
+/* .instructions-icon {
     max-width: 75px;
   
-}
+} */
 
 #main-container {
     background-color: #5B7C8B !important;
@@ -170,7 +174,8 @@ body {
 } */ 
 
 .icon {
-    background-color: transparent;
+    background-color: #cee1e9;
+    opacity: 0.5;
 }
 
 #contact-us {
