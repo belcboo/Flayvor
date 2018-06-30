@@ -14,6 +14,9 @@ $(document).ready(function () {
     //Create new child to ref database
     database.ref("top5").on("child_added", function (snapshot) {
 
+        var food = snapshot.val().ingredient;
+
+        $("#top").append("<p> " +  food + "</p>")
 
     });
 
