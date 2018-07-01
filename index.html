@@ -1,90 +1,99 @@
 <!DOCTYPE html>
 <html lang='en-us'>
+
 <head>
-    <meta charset='UTF-8'>
-     <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Flayvor</title>
+  <meta charset='UTF-8'>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flayvor</title>
 
-    <!-- CSS --> 
-    <link rel="stylesheet" href="assets/css/reset.css">
-    <link type='text/css' rel='stylesheet' href='assets/css/style.css'>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
-    <!-- Import materialize -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+  <!-- CSS -->
+  <link type='text/css' rel='stylesheet' href='assets/css/style.css'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
+  <!-- Import materialize -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
 
-    <!--Firebase Script -->
-    <script src='https://www.gstatic.com/firebasejs/4.12.0/firebase.js'></script>
+  <!--Firebase Script -->
+  <script src='https://www.gstatic.com/firebasejs/4.12.0/firebase.js'></script>
 </head>
 
 <body>
 
-<nav id='nav-bar' role='navigation'>
+  <nav id='nav-bar' role='navigation'>
     <div class='nav-wrapper'>
-        <a href="index.html" id='nav-logo' class='brand-logo'>FLAYVOR</a>
-        <ul class='sidenav right' id='slide-out-r'>
-            <li>
-                <div class="user-view">
-                    <div class="background">
-                        <img src="images/office.jpg">
-                    </div>
-                <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
-                <a href="#name"><span class="white-text name">John Doe</span></a>
-                <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
-                </div>
-            </li>
-        </ul>
-            <a href='#' data-target='slide-out-r' class='sidenav-trigger show-on-large right'><i class="material-icons">menu</i></a></li>
-    </div>  
-</nav>
-                  
-    <div id='index-banner' class='parallax-container valign-wrapper'>
-        <div class='center'>
-        <img id='logo' class='responsive-img' src='assets/images/flayvor-logo-2.png'>
-        </div>     
-        <div class="parallax"><img src="assets/images/blue-1.jpg" class='responsive-img' alt="Food and Drinks2"></div>  
+      <a href="index.html" id='nav-logo' class='brand-logo'><img alt="flayvor.co_logo" src="assets/images/flayvor-logo-2.png" height="60px"></a>
+      <ul class='sidenav right' id='slide-out-r'>
+        <li>
+          <div class="user-view">
+            <div class="background">
+              <img src="images/office.jpg">
+            </div>
+            <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+            <a href="#name"><span class="white-text name">John Doe</span></a>
+            <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+          </div>
+        </li>
+      </ul>
+      <a href='#' data-target='slide-out-r' class='sidenav-trigger show-on-large right'><i class="material-icons">menu</i></a></li>
     </div>
-    
-   <div class='center' id='buttons-start'>
-        <h5 class='white-text'>What are you in the mood for?</h5>
-        <br><br>
-            <button id="food-button" class="btn-large waves-effect waves-light white black-text">Food</button>
-            <button id="drink-button" class="btn-large waves-effect waves-light white black-text">Drinks</button>
+  </nav>
+
+  <div id='index-banner' class='parallax-container valign-wrapper'>
+    <div class='center'>
+      <img id='logo' class='responsive-img' src='assets/images/flayvor-logo-2.png'>
+    </div>
+    <div class="parallax"><img src="assets/images/blue-1.jpg" class='responsive-img' alt="Food and Drinks2"></div>
+  </div>
+
+
+  <div class='center' id='buttons-start'>
+    <h5 class='white-text'>What are you in the mood for?</h5>
+    <br><br>
+    <button id="food-button" class="btn-large waves-effect waves-light white black-text">Food</button>
+    <button id="drink-button" class="btn-large waves-effect waves-light white black-text">Drinks</button>
+  </div>
+
+  <div id='main-container'>
+    <div class='row center' id='instructions'>
+      <div class='col s4 m4'>
+        <div class='icon'>
+          <h2 class='center white-text'><i class='material-icons'>keyboard</i></h2>
+          <h6>Instruction 1</h6>
+        </div>
+      </div>
+      <div class='col s4 m4'>
+        <div class='icon'>
+          <h2 class='center'><i class='material-icons'>keyboard</i></h2>
+          <h6 class='center white-text'>Instruction #2</h6>
+        </div>
+      </div>
+      <div class='col s4 m4'>
+        <div class='icon'>
+          <h2 class='center'><i class='material-icons'>keyboard</i></h2>
+          <h6 class='center white-text '>Instruction #3</h6>
+        </div>
+      </div>
+    </div>
+    <div class='center'>
+      <div class="container" id='search-bar'>
+        <!-- <div class="chips chips-placeholder"></div> -->
+        <input id="ingredients" type="text" class="center">
+      </div>
+      <button class='btn large' id='flavorize-button'>Flavorize</button>
+    </div>
+  </div>
+
+  <div class='parallax-container valign-wrapper'>
+    <div class="row">
+      <div id='top-recipes' class='col s12'></div>
+      <div class="center" id="recipeButtons">
+        <a class="waves-effect waves-light btn" id="lessButton"><<<</a>
+        <a class="waves-effect waves-light btn" id="moreButton">>>></a>
+      </div>
     </div>
 
-    <div id='main-container'>
-        <div class='row center' id='instructions'>
-            <div class='col s4 m4'>
-                <div class='icon'>
-                    <h2 class='center white-text'><i class='material-icons'>keyboard</i></h2>
-                    <h6>Instruction 1</h6>
-                </div>
-            </div>
-            <div class='col s4 m4'>
-                <div class='icon'>
-                    <h2 class='center'><i class='material-icons'>keyboard</i></h2>
-                    <h6 class='center white-text'>Instruction #2</h6>
-                </div>
-            </div>
-            <div class='col s4 m4'>
-                <div class='icon'>
-                    <h2 class='center'><i class='material-icons'>keyboard</i></h2>
-                    <h6 class='center white-text '>Instruction #3</h6>
-                </div>
-            </div>    
-        </div>
-        <div id='search-bar'>
-            <div class='center'>
-                <!-- <div class="chips chips-placeholder">
-                    
-                </div> -->
-                <input id="ingredients" type="text">
-                <button class='btn large' id='flavorize-button'>Flavorize</button>
-            </div>            
-        </div>
-    </div>
-
+<<<<<<< HEAD
     <div class='parallax-container valign-wrapper'>
         <div id='top-recipes'>
             <table>
@@ -146,46 +155,51 @@
         
             <div class="parallax"><img class='responsive-img' src="assets/images/blue-3.jpg" alt="Food and Drinks"></div>
         </div>
+=======
+    <div class="parallax"><img class='responsive-img' src="assets/images/blue-3.jpg" alt="Food and Drinks"></div>
+  </div>
+>>>>>>> origin
 
-     
-    <div class='row' id='contact-us'>
-        <div class='col s12 center'>
-            <br><br>
-            <h4>Contact Us</h4>
-            <p class='center'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim in laboriosam repudiandae commodi dignissimos iure mollitia explicabo voluptate modi quis molestias nostrum animi reprehenderit, minima, eveniet omnis minus assumenda doloremque.</p>
-            <br><br>
-        </div>
+
+  <div class='row' id='contact-us'>
+    <div class='col s12 center'>
+      <br><br>
+      <h4>Contact Us</h4>
+      <p class='center'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim in laboriosam repudiandae commodi dignissimos iure mollitia explicabo voluptate modi quis molestias nostrum animi reprehenderit, minima, eveniet omnis minus assumenda doloremque.</p>
+      <br><br>
     </div>
+  </div>
 
-    <div class="parallax-container valign-wrapper" id='bottom-parallax'>
-        <div class="section no-pad-bot">
-          <div class="container">
-            <div class="row center">
-              <h5 class="header col s12 light"></h5>
-            </div>
-          </div>
+  <div class="parallax-container valign-wrapper" id='bottom-parallax'>
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light"></h5>
         </div>
-        <div class="parallax"><img src="assets/images/blue-2.jpg" alt="Ingredients" class='responsive-img'></div>
+      </div>
     </div>
+    <div class="parallax"><img src="assets/images/blue-2.jpg" alt="Ingredients" class='responsive-img'></div>
+  </div>
 
-<footer class='page-footer'>
+  <footer class='page-footer'>
     <div class='footer-container center'>
-        Made by <a class='white-text text-lighten-3 center'>x</a>
+      Made by <a class='white-text text-lighten-3 center'>x</a>
     </div>
-</footer>
+  </footer>
 
-   <!-- jQuery script -->
-   <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
-    <script type='text/javascript' src='assets/js/app.js'></script>
+  <!-- jQuery script -->
+  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  <script type='text/javascript' src='assets/js/app.js'></script>
 
 </body>
+
 </html>
 
 
 
-  <!-- Customizable input  -->
+<!-- Customizable input  -->
 <!-- <div class='ingredients'>
       <p class='add-ingredients'>To add ingredients, enter your text and press enter. You can delete them by clicking on the close icon. </p>
       <div class="chips">
@@ -193,7 +207,7 @@
             <i class="close material-icons">x</i>
           </div> -->
 
-      <!--
+<!--
        <div class="chips">
 
           </div> -->
