@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Flayvor</title>
 
-    <!-- CSS --> 
+    <!-- CSS -->
     <link rel="stylesheet" href="assets/css/reset.css">
     <link type='text/css' rel='stylesheet' href='assets/css/style.css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -36,16 +36,16 @@
             </li>
         </ul>
             <a href='#' data-target='slide-out-r' class='sidenav-trigger show-on-large right'><i class="material-icons">menu</i></a></li>
-    </div>  
+    </div>
 </nav>
-                  
+
     <div id='index-banner' class='parallax-container valign-wrapper'>
         <div class='center'>
         <img id='logo' class='responsive-img' src='assets/images/flayvor-logo-2.png'>
-        </div>     
-        <div class="parallax"><img src="assets/images/blue-1.jpg" class='responsive-img' alt="Food and Drinks2"></div>  
+        </div>
+        <div class="parallax"><img src="assets/images/blue-1.jpg" class='responsive-img' alt="Food and Drinks2"></div>
     </div>
-    
+
    <div class='center' id='buttons-start'>
         <h5 class='white-text'>What are you in the mood for?</h5>
         <br><br>
@@ -72,82 +72,43 @@
                     <h2 class='center'><i class='material-icons'>keyboard</i></h2>
                     <h6 class='center white-text '>Instruction #3</h6>
                 </div>
-            </div>    
+            </div>
         </div>
         <div id='search-bar'>
             <div class='center'>
                 <!-- <div class="chips chips-placeholder">
-                    
+
                 </div> -->
-                <input id="ingredients" type="text">
+                <input id="ingredients" type="text" class="center">
                 <button class='btn large' id='flavorize-button'>Flavorize</button>
-            </div>            
+            </div>
         </div>
     </div>
 
     <div class='parallax-container valign-wrapper'>
         <div id='top-recipes'>
-            <table>
+            <table id="showRecipes">
             <thead>
                 <tr> <h5 class='white-text center'>Top Recipes</h5></tr>
-            </thead>                    
+            </thead>
             <tbody>
-            <tr>
-            <td>
-                <div class="card">
-                    <div class="card-image waves-effect waves-block waves-light">
-                        <img class="activator" src="">
-                    </div>
-                    <div class="card-content" id='card-img'>
-                        <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                        <p><a href="#">This is a link</a></p>
-                    </div>
-                    <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="card">
-                    <div class="card-image waves-effect waves-block waves-light">
-                        <img class="activator"  src=''>
-                    </div>
-                    <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                        <p><a href="#">This is a link</a></p>
-                    </div>
-                    <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="card">
-                    <div class="card-image waves-effect waves-block waves-light">
-                        <img class="activator" src="">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            <p><a href="#">This is a link</a></p>
-                    </div>
-                    <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    </div>
-                </div>
-            </td>
+            <tr id="tds">
+              <!-- The TD's are generated dinamically.  -->
             </tr>
             </tbody>
             </table>
+
+            <div id="recipebuttons">
+              <button id="lessButton">Less</button>
+              <button id="moreButton">More</button>
+            </div>
         </div>
-                    
-        
+
+
             <div class="parallax"><img class='responsive-img' src="assets/images/blue-3.jpg" alt="Food and Drinks"></div>
         </div>
 
-     
+
     <div class='row' id='contact-us'>
         <div class='col s12 center'>
             <br><br>

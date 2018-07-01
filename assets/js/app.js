@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
   // $('.sidenav').sidenav();
   $('#main-container').hide();
@@ -23,34 +22,15 @@ $('.sidenav').sidenav({
 // // Destroy sideNav
 // $('.sidenav').sidenav('destroy');
 
-$('#food-button').click(function() {
-  $('#main-container').show();
-    console.log('Choice: Food');
-    $('#buttons-start').hide();
-  });
 
 
 
-$('#drink-button').click(function() {
-  $('#main-container').show();
-  console.log('Choice: Drinks');
-  $('#buttons-start').hide();
+
+$('.chips').chips();
+$('.chips-placeholder').chips({
+  placeholder: 'Add ingredient...',
+  secondaryPlaceholder: 'add more...',
 });
-
-
-
-$('#flavorize-button').click(function() {
-  $('#top-recipes').show();
-});
-
-
-
-
-  $('.chips').chips();
-  $('.chips-placeholder').chips({
-    placeholder: 'Add ingredient...',
-    secondaryPlaceholder: 'add more...',
-  });
 
 
 
@@ -77,25 +57,25 @@ $('#flavorize-button').click(function() {
 
 var storeResponse;
 var countStart = 0;
-var countEnd = 10;
+var countEnd = 3;
 var type = "";
 
 var general = {
 
-  magicButton: function() {
-    //Shows the more button while the countStart < 90.
-    if (countStart === 0) {
-      $("#browseButton").hide();
-      $("#typer").hide();
-    } else if (countStart === 10) {
-      $("#browseButton").show();
-      $("#lessButton").hide();
-    } else if (countStart > 10 && countStart < 90) {
-      $("#lessButton").show();
-    } else { //Otherwhise hide it.
-      $("#browseButton").hide();
-    }
-  },
+  // magicButton: function() {
+  //   //Shows the more button while the countStart < 90.
+  //   if (countStart === 0) {
+  //     $("#browseButton").hide();
+  //     $("#typer").hide();
+  //   } else if (countStart === 10) {
+  //     $("#browseButton").show();
+  //     $("#lessButton").hide();
+  //   } else if (countStart > 10 && countStart < 90) {
+  //     $("#lessButton").show();
+  //   } else { //Otherwhise hide it.
+  //     $("#browseButton").hide();
+  //   }
+  // },
 
 }
 
@@ -110,7 +90,7 @@ var food = {
     //Default start of API Url
     var Uri = " https://api.edamam.com/search?q="
     //Default end of the API Url.
-    var Api = "&app_id=951c44a9&app_key=10fce9b48db6f70dd8fec5472069d5f7&from=0&to=100"
+    var Api = "&app_id=951c44a9&app_key=10fce9b48db6f70dd8fec5472069d5f7&from=0&to=30"
 
     //Merge the start + the ingridients typed by user + the end of the API Url.
     var queryUrl = Uri + ingredients + Api;
@@ -131,29 +111,60 @@ var food = {
 
       console.log(storeResponse);
       //Calls the "printer"
-      logic.printEdamam();
+      food.print();
     })
   },
 
   print: function() {
 
-    //Cleans DIV to show results.
     $("#recipies").empty();
-    //Run for loop to print 10 recipies.
+
     for (countStart; countStart < countEnd; countStart++) {
+      console.log("card",countStart,countEnd);
+      var td = $("<td>");
+      var card = $("<div>"); //Creates div for card.
+      var cardImage = $("<div>"); //Creates div for the image of the card.
+      var image = $("<img>"); //
+      var cardContent = $("<div>");
+      var cardContentSpan = $("<span>");
+      var cardP = $("<p>");
+      var cardReveal = $("<div>");
 
-      //Create link for 10 recipies inside a p tag.
-      var pTag = $("<p>");
-      var aTag = $("<a>");
-      aTag.attr("href", storeResponse.hits[countStart].recipe.url)
-      aTag.attr("target", "_blank");
-      aTag.append("", storeResponse.hits[countStart].recipe.label);
-      pTag.append(aTag);
-      $("#recipies").append(pTag);
-    }
+      card.attr('class', 'card'); //Add class "card".
 
-    //Call function to check if show or hide the "more button"
-    general.magicButton();
+      cardImage.attr('class', 'card-image waves-effect waves-block waves-light');
+      image.attr('class', 'activator responsive');
+      image.attr('src', storeResponse.hits[countStart].recipe.image);
+      cardImage.append(image); //Add image inside the div of Card
+
+      cardContent.attr('class', 'card-content');
+      cardContent.attr('id', 'card-img');
+
+      cardContentSpan.attr('class', 'card-title activator grey-text text-darken-4');
+      cardContentSpan.append(storeResponse.hits[countStart].recipe.label);
+      cardContentSpan.append('<i class="material-icons right">more_vert</i>');
+
+      cardContent.append(cardContentSpan);
+
+      cardP.append('<a href="#">This is a link</a>');
+      cardContent.append(cardP);
+
+      cardReveal.attr('class','card-title grey-text text-darken-4');
+      cardReveal.append(storeResponse.hits[countStart].recipe.label);
+      cardReveal.append("<i class='material-icons right'>close</i>");
+
+      card.append(cardImage);
+      card.append(cardContent);
+      card.append(cardReveal);
+
+      td.append(card);
+      console.log(td);
+      $("#tds").append(td);
+
+    };
+
+    countEnd += 3;
+
   },
 
   //Shows 10 more recipies.
@@ -210,40 +221,101 @@ var drinks = {
 
     for (countStart; countStart < countEnd; countStart++) {
 
+      var card1 = "";
+      var card2 = "";
+      var card3 = "";
+
+      for (var x = 0; x < 3; x++) {
+        var card = $("<div>"); //Creates div for card.
+        var cardImage = $("<div>"); //Creates div for the image of the card.
+        var image = $("<img>"); //
+        var cardContent = $("<div>");
+        var cardContentSpan = $("<span>");
+        var cardP = $("<p>");
+
+        card.attr('class', 'card'); //Add class "card".
+
+        cardImage.attr('class', 'card-image waves-effect waves-block waves-light');
+        image.attr('class', 'activator');
+        image.attr('src', storeResponse.drinks[countStart].hits.image);
+        cardImage.append(image); //Add image inside the div of Card
+
+        cardContent.attr('class', 'card-content');
+        cardContent.attr('id', 'card-img');
+
+        cardContentSpan.attr('class', 'card-title activator grey-text text-darken-4');
+        cardContentSpan.append(storeResponse.drinks[countStart].hits.label);
+        cardContentSpan.append('<i class="material-icons right">more_vert</i>');
+
+        cardContent.append(cardContentSpan);
+
+        cardP.append('<a href="#">This is a link</a>');
+        cardContent.append(cardP);
+
+        card.append(cardImage);
+        card.append(cardContent);
+
+        card[x].append(card);
+      };
+
+      $("#showRecipes > tbody").append("<tr><td>" + card1 + "</td><td>" + card2 + "</td></tr>");
+
+
+
+
 
       //Create link for 10 recipies inside a p tag.
-      var pTag = $("<p>");
-      var aTag = $("<a>");
-      aTag.attr("drinkid", storeResponse.drinks[countStart].idDrink)
-      aTag.append("", storeResponse.drinks[countStart].strDrink);
-      pTag.append(aTag);
-      $("#recipies").append(pTag);
+      // var pTag = $("<p>");
+      // var aTag = $("<a>");
+      // aTag.attr("drinkid", storeResponse.drinks[countStart].idDrink)
+      // aTag.append("", storeResponse.drinks[countStart].strDrink);
+      // pTag.append(aTag);
+      // $("#recipies").append(pTag);
     }
 
 
-    general.magicButton();
+    // general.magicButton();
 
 
   },
 
-  more: function(){
+  more: function() {
 
   }
 
 
 }
 //Execute the start function
-general.magicButton();
+// general.magicButton();
 
-//Click on "Submit" button.
-$("#AddIngredients").on("click", function() {
 
+
+$('#food-button').click(function() {
+  $('#main-container').show();
+  console.log('Choice: Food');
+  $('#buttons-start').hide();
+  type = "food";
+});
+
+
+
+$('#drink-button').click(function() {
+  $('#main-container').show();
+  console.log('Choice: Drinks');
+  $('#buttons-start').hide();
+  type = "drinks";
+});
+
+
+$('#flavorize-button').click(function() {
+  $('#top-recipes').show();
   if (type === "food") {
     food.pull();
   } else {
     drinks.pull();
   }
-})
+});
+
 
 $("#moreButton").on("click", function() {
   if (type === "food") {
