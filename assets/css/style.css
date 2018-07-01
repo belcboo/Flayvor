@@ -2,11 +2,11 @@
     box-sizing: border-box;
 }
 
-body { 
+body {
    /* background-color: #5B7C8B; */
   /* background-image: url('../images/background.jpg'); */
 
-    
+
 }
 
 
@@ -15,7 +15,7 @@ body {
     width: 100%;
     height: 56px;
     line-height: 56px;
-    
+
     }
 
 .nav-wrapper {
@@ -26,7 +26,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 24px;
 
-    
+
 }
 
 #slide-out-r {
@@ -34,10 +34,10 @@ body {
 }
 
 #instructions {
-   
+
    padding: 20px;
    background-color: #5B7C8B;
-   
+
 }
 
 /* .parallax-container {
@@ -46,7 +46,7 @@ body {
 
   /* .parallax img {
       @media #{$small-and-down} {max-width: 200%;}
-    @media 
+    @media
     } */
 
 /* #buttons-menu {
@@ -55,10 +55,10 @@ body {
 } */
 
 .parallax-container {
-    min-height: 500px;
+    min-height: 750px;
     width: 100%;
     height: auto;
-    
+
 }
 
 
@@ -72,18 +72,18 @@ body {
       top: 10%;
     }
   }
-  
+
   @media only screen and (max-width : 600px) {
     #index-banner .section {
       top: 0;
     }
   } */
-  
+
 
 /* .sidenav {
     position: fixed;
     right: 0 !important;
-    background-color: #5B7C8B !important; 
+    background-color: #5B7C8B !important;
 } */
 /* .sidenav-trigger {
     float: right;
@@ -114,7 +114,7 @@ body {
     border-width: 7px;
     border-color: #5B7C8B;
 }
-/* 
+/*
 @media only screen and (max-width: 992px) {
     #logo {
         max-width: 300px;
@@ -155,12 +155,12 @@ body {
     width: 100%;
     height: auto;
     padding: 50px;
-    
+
 }
 
 /* .instructions-icon {
     max-width: 75px;
-  
+
 } */
 
 #main-container {
@@ -168,10 +168,10 @@ body {
 }
 /* #bottom-parallax {
     /* overflow: hidden visible; */
-    /* height: 667px; 
+    /* height: 667px;
 
-    
-} */ 
+
+} */
 
 .icon {
     background-color: #cee1e9;
@@ -179,19 +179,19 @@ body {
 }
 
 #contact-us {
-    background-color: white; 
+    background-color: white;
 }
 
 /* table {
     background-color: transparent;
 } */
 
-#top-recipes {
+/* #top-recipes {
     width: 95%;
     margin: 0 auto;
 
     /* background-image: url('../images/background.jpg');  */
-} 
+
 
 
 /* #contact-us {
