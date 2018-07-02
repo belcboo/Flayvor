@@ -44,7 +44,20 @@ $(document).ready(function() {
   firebase.initializeApp(config);
   var database = firebase.database();
 
+  function googleLogin() {
+
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+
+      .then(result => {
+        var user = result.user;
+        document.write("Hello ${user.displayName}");
+        console.log(user)
+      })
+  }
+
   var topRecipes = {
+
 
     read: function () {
 
@@ -74,7 +87,7 @@ $(document).ready(function() {
     }
 
   }
-  
+
   topRecipes.read();
 
   var food = {
@@ -274,6 +287,12 @@ $("#lessButton").on("click", function() {
   } else {
     drinks.less();
   }
+});
+
+$("#googleLogin").on("click", function() {
+
+  googleLogin();
+
 });
 
 });
