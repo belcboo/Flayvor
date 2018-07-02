@@ -117,7 +117,7 @@ var drinks = {
     var drinkLen = storeResponse.drinks.length;
     console.log(drinkLen, countStart, cPrinted);
     for (var x = 0; x < 3; x++){
-      if (cPrinted < drinkLen) {
+      if (x === 0 && countStart < drinkLen) {
         $("#cimg-1").attr("src", storeResponse.drinks[countStart].strDrinkThumb);
         $('#ccont-1').text(storeResponse.drinks[countStart].strDrink);
         console.log("inside 1");
@@ -126,9 +126,8 @@ var drinks = {
         //   $('#cul-1').text("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
         // };
         countStart++;
-        cPrinted++;
         $("#card1").show();
-      } else if (cPrinted < drinkLen) {
+      } else if (x === 1 && countStart < drinkLen) {
         $("#cimg-2").attr('src', storeResponse.drinks[countStart].strDrinkThumb);
         $('#ccont-2').text(storeResponse.drinks[countStart].strDrink);
         console.log("inside 2");
@@ -137,9 +136,8 @@ var drinks = {
         // //   $('#cul-2').text("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
         // // };
         countStart++;
-        cPrinted++;
         $("#card2").show();
-      } else if (cPrinted < drinkLen) {
+      } else if (x === 2 && countStart < drinkLen) {
         $("#cimg-3").attr('src', storeResponse.drinks[countStart].strDrinkThumb);
         $('#ccont-3').text(storeResponse.drinks[countStart].strDrink);
         console.log("inside 3");
@@ -148,7 +146,6 @@ var drinks = {
         // //   $('#cul-3').text("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
         // // };
         countStart++;
-        cPrinted++;
         $("#card3").show();
       }
     }
