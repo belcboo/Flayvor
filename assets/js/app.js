@@ -31,15 +31,61 @@ $(document).ready(function() {
     }
   }
 
+    //Saved to firebase
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA4z9UNz-9YYl6NIOOX9r7e78bXl8n0kFs",
+    authDomain: "flayvor-700bf.firebaseapp.com",
+    databaseURL: "https://flayvor-700bf.firebaseio.com",
+    projectId: "flayvor-700bf",
+    storageBucket: "flayvor-700bf.appspot.com",
+    messagingSenderId: "16945531953"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
+
+  var topRecipes = {
+
+    read: function () {
+
+      //Create new child to ref database
+      database.ref().on("child_added", function (snapshot) {
+
+        var ingredient1 = snapshot.val().ingredient;
+
+        $("#topCard1").text(ingredient1);
+
+      });
+    },
+
+    write: function () {
+
+      var ingredientDb = $("#ingredients").val().trim();
+
+      console.log(ingredientDb);
+
+      var savedSearch = {
+        ingredient: ingredientDb
+
+      }
+
+      //pushing to firebase
+      database.ref().push(savedSearch);
+    }
+  }
+  topRecipes.write();
+  topRecipes.read();
+
+
   var food = {
 
     pull: function() {
       countStart = 0; //Returns countStart to 0
-      var ingredients = $("#ingredients").val(); //Assign text typed by user to variable ingridients.
+      var ingredients = $("#ingredients").val(""); //Assign text typed by user to variable ingridients.
       var Uri = " https://api.edamam.com/search?q=" //Default start of API Url
       var Api = "&app_id=951c44a9&app_key=10fce9b48db6f70dd8fec5472069d5f7&from=0&to=30" //Default end of the API Url.
       var queryUrl = Uri + ingredients + Api; //Merge the start + the ingridients typed by user + the end of the API Url.
-      $("#ingredients").val(""); //Cleans input
+      $("#ingredients").val(); //Cleans input
       console.log(queryUrl);
       $.ajax({ //Using ajax to get the json that contains the recipies.
         url: queryUrl,
@@ -201,6 +247,9 @@ $('#drink-button').click(function() {
 });
 
 $('#flavorize-button').click(function() {
+  topRecipes.write();
+  topRecipes.read();
+
   $('#top-recipes').show();
   if (type === "food") {
     food.pull();
@@ -208,6 +257,7 @@ $('#flavorize-button').click(function() {
     drinks.pull();
   }
   general.magicButton();
+
 });
 
 $("#moreButton").on("click", function() {
