@@ -72,10 +72,10 @@ $(document).ready(function() {
       //pushing to firebase
       database.ref().push(savedSearch);
     }
-  }
-  topRecipes.write();
-  topRecipes.read();
 
+  }
+  
+  topRecipes.read();
 
   var food = {
 
@@ -247,8 +247,8 @@ $('#drink-button').click(function() {
 });
 
 $('#flavorize-button').click(function() {
+
   topRecipes.write();
-  topRecipes.read();
 
   $('#top-recipes').show();
   if (type === "food") {
