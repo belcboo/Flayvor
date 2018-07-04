@@ -44,19 +44,38 @@ $(document).ready(function() {
   firebase.initializeApp(config);
   var database = firebase.database();
 
+
+
   function googleLogin() {
 
-    var provider = new firebase.auth.GoogleAuthProvider();
-    
-    firebase.auth().signInWithPopup(provider)
 
-      .then(result => {
+// Start a sign in process for an unauthenticated user.
+var provider = new firebase.auth.GoogleAuthProvider();
+provider.addScope('profile');
+provider.addScope('email');
+
+
+
+
+// ---------------POPUP--------------------------
+
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+
         var user = result.user;
+        var token = result.credential.accessToken;
+
         document.write("Hello ${user.displayName}");
         console.log(user)
-      })
+        console.log(token)
+      });
+
+
+
   }
 
+
+
+  
   var topRecipes = {
 
 
