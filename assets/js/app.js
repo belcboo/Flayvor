@@ -14,6 +14,35 @@ $('#lessButton').hide();
 $('#moreButton').hide();
 $('.parallax').parallax();
 
+    //Saved to firebase
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA4z9UNz-9YYl6NIOOX9r7e78bXl8n0kFs",
+    authDomain: "flayvor-700bf.firebaseapp.com",
+    databaseURL: "https://flayvor-700bf.firebaseio.com",
+    projectId: "flayvor-700bf",
+    storageBucket: "flayvor-700bf.appspot.com",
+    messagingSenderId: "16945531953"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
+
+  function googleLogin() {
+// Start a sign in process for an unauthenticated user.
+var provider = new firebase.auth.GoogleAuthProvider();
+provider.addScope('profile');
+provider.addScope('email');
+// ---------------POPUP-------------------------
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+        var user = result.user;
+        var token = result.credential.accessToken;
+
+        document.write("Hello ${user.displayName}");
+        console.log(user)
+        console.log(token)
+      });
+  }
+
 var general = {
   mlButton: function() {
     if (countStart === 0) {
@@ -264,6 +293,12 @@ $("#moreButton").on("click", function() {
 
 $("#lessButton").on("click", function() {
   general.less();
+});
+
+
+// ref google login button.
+$("#googleLogin").on("click", function() {
+  googleLogin();
 });
 
 // });
