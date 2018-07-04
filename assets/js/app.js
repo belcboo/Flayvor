@@ -1,39 +1,49 @@
 // $(document).ready(function() {
-  $('.parallax').parallax();
-  // $('#food-button').click(function() {
-  //   $('#main-container').show();
-  //     console.log('Choice: Food');
-  //     $('#buttons-start').hide();
-  //   });
-   
-  
-  
-  // $('#drink-button').click(function() {
-  //   $('#main-container').show();
-  //   console.log('Choice: Drinks');
-  //   $('#buttons-start').hide();
-  // });
-
-
-  ///////
 
 var storeResponse;
+var storeDrinks;
 var countStart = 0;
-var countEnd = 3;
 var cPrinted = 0;
 var type = "";
 
+$('#main-container').hide();
+$("#card1").hide();
+$("#card2").hide();
+$("#card3").hide();
+$('#lessButton').hide();
+$('#moreButton').hide();
+$('.parallax').parallax();
+
+    //Saved to firebase
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA4z9UNz-9YYl6NIOOX9r7e78bXl8n0kFs",
+    authDomain: "flayvor-700bf.firebaseapp.com",
+    databaseURL: "https://flayvor-700bf.firebaseio.com",
+    projectId: "flayvor-700bf",
+    storageBucket: "flayvor-700bf.appspot.com",
+    messagingSenderId: "16945531953"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
+
+  function googleLogin() {
+// Start a sign in process for an unauthenticated user.
+var provider = new firebase.auth.GoogleAuthProvider();
+provider.addScope('profile');
+provider.addScope('email');
+// ---------------POPUP-------------------------
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+        var user = result.user;
+        var token = result.credential.accessToken;
+
+        document.write("Hello ${user.displayName}");
+        console.log(user)
+        console.log(token)
+      });
+  }
 
 var general = {
-  start: function() {
-    $('#main-container').hide();
-    $("#card1").hide();
-    $("#card2").hide();
-    $("#card3").hide();
-    $('#lessButton').hide();
-    $('#moreButton').hide();
-    $('.parallax').parallax();
-  },
   mlButton: function() {
     if (countStart === 0) {
       $('#lessButton').hide();
@@ -87,7 +97,7 @@ var food = {
     $('#ccont-1').text(storeResponse.hits[countStart].recipe.label);
     var ingCount = storeResponse.hits[countStart].recipe.ingredientLines.length; //Counts the ingridients included in the recipie.
     for (var m = 0; m < ingCount; m++) { //This for loop is in charge of adding the lines of ingridients to the Card Reveal.
-      $('#cul-1').text("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
+      $('#cul-1').append("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
     };
     countStart++;
     $("#card1").show();
@@ -95,7 +105,7 @@ var food = {
     $('#ccont-2').text(storeResponse.hits[countStart].recipe.label);
     var ingCount = storeResponse.hits[countStart].recipe.ingredientLines.length; //Counts the ingridients included in the recipie.
     for (var m = 0; m < ingCount; m++) { //This for loop is in charge of adding the lines of ingridients to the Card Reveal.
-      $('#cul-2').text("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
+      $('#cul-2').append("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
     };
     countStart++;
     $("#card2").show();
@@ -103,12 +113,11 @@ var food = {
     $('#ccont-3').text(storeResponse.hits[countStart].recipe.label);
     var ingCount = storeResponse.hits[countStart].recipe.ingredientLines.length; //Counts the ingridients included in the recipie.
     for (var m = 0; m < ingCount; m++) { //This for loop is in charge of adding the lines of ingridients to the Card Reveal.
-      $('#cul-3').text("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
+      $('#cul-3').append("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
     };
     countStart++;
     $("#card3").show();
     general.mlButton();
-
   },
 };
 
@@ -131,48 +140,133 @@ var drinks = {
     });
   },
   print: function() {
+    $("#card1").hide();
+    $("#card2").hide();
+    $("#card3").hide();
     var drinkLen = storeResponse.drinks.length;
-    console.log(drinkLen, countStart, cPrinted);
-    for (var x = 0; x < 3; x++){
+    console.log(drinkLen, countStart);
+    for (var x = 0; x < 3; x++) {
       if (x === 0 && countStart < drinkLen) {
         $("#cimg-1").attr("src", storeResponse.drinks[countStart].strDrinkThumb);
         $('#ccont-1').text(storeResponse.drinks[countStart].strDrink);
         console.log("inside 1");
-        // var ingCount = storeResponse.hits[countStart].recipe.ingredientLines.length; //Counts the ingridients included in the recipie.
-        // for (var m = 0; m < ingCount; m++) { //This for loop is in charge of adding the lines of ingridients to the Card Reveal.
-        //   $('#cul-1').text("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
-        // };
+        var queryDrink = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + storeResponse.drinks[countStart].idDrink;
+        console.log(queryDrink);
+        $.ajax({
+          url: queryDrink,
+          method: "GET"
+        }).then(function(drinkResponse) {
+          var ingr0 = drinkResponse.drinks[0].strIngredient1;
+          var ingr1 = drinkResponse.drinks[0].strIngredient2;
+          var ingr2 = drinkResponse.drinks[0].strIngredient3;
+          var ingr3 = drinkResponse.drinks[0].strIngredient4;
+          var ingr4 = drinkResponse.drinks[0].strIngredient5;
+          var ingr5 = drinkResponse.drinks[0].strIngredient6;
+          var ingr6 = drinkResponse.drinks[0].strIngredient7;
+          var ingr7 = drinkResponse.drinks[0].strIngredient8;
+          var ingr8 = drinkResponse.drinks[0].strIngredient9;
+          var ingr9 = drinkResponse.drinks[0].strIngredient10;
+          var meas0 = drinkResponse.drinks[0].strMeasure1;
+          var meas1 = drinkResponse.drinks[0].strMeasure2;
+          var meas2 = drinkResponse.drinks[0].strMeasure3;
+          var meas3 = drinkResponse.drinks[0].strMeasure4;
+          var meas4 = drinkResponse.drinks[0].strMeasure5;
+          var meas5 = drinkResponse.drinks[0].strMeasure6;
+          var meas6 = drinkResponse.drinks[0].strMeasure7;
+          var meas7 = drinkResponse.drinks[0].strMeasure8;
+          var meas8 = drinkResponse.drinks[0].strMeasure9;
+          var meas9 = drinkResponse.drinks[0].strMeasure10;
+          var qIngr = [ingr0, ingr1, ingr2, ingr3, ingr4, ingr5, ingr6, ingr7, ingr8, ingr9];
+          var qMeas = [meas0, meas1, meas2, meas3, meas4, meas5, meas6, meas7, meas8, meas9]
+          for (y = 0; y < 3; y++) {
+            $("#cul-1").append("<li>" + qMeas[y] + " " + qIngr[y] + "</li>");
+          }
+        })
         countStart++;
         $("#card1").show();
       } else if (x === 1 && countStart < drinkLen) {
         $("#cimg-2").attr('src', storeResponse.drinks[countStart].strDrinkThumb);
         $('#ccont-2').text(storeResponse.drinks[countStart].strDrink);
         console.log("inside 2");
-        // // var ingCount = storeResponse.hits[countStart].recipe.ingredientLines.length; //Counts the ingridients included in the recipie.
-        // // for (var m = 0; m < ingCount; m++) { //This for loop is in charge of adding the lines of ingridients to the Card Reveal.
-        // //   $('#cul-2').text("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
-        // // };
+        var queryDrink = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + storeResponse.drinks[countStart].idDrink;
+        console.log(queryDrink);
+        $.ajax({
+          url: queryDrink,
+          method: "GET"
+        }).then(function(drinkResponse) {
+          var ingr0 = drinkResponse.drinks[0].strIngredient1;
+          var ingr1 = drinkResponse.drinks[0].strIngredient2;
+          var ingr2 = drinkResponse.drinks[0].strIngredient3;
+          var ingr3 = drinkResponse.drinks[0].strIngredient4;
+          var ingr4 = drinkResponse.drinks[0].strIngredient5;
+          var ingr5 = drinkResponse.drinks[0].strIngredient6;
+          var ingr6 = drinkResponse.drinks[0].strIngredient7;
+          var ingr7 = drinkResponse.drinks[0].strIngredient8;
+          var ingr8 = drinkResponse.drinks[0].strIngredient9;
+          var ingr9 = drinkResponse.drinks[0].strIngredient10;
+          var meas0 = drinkResponse.drinks[0].strMeasure1;
+          var meas1 = drinkResponse.drinks[0].strMeasure2;
+          var meas2 = drinkResponse.drinks[0].strMeasure3;
+          var meas3 = drinkResponse.drinks[0].strMeasure4;
+          var meas4 = drinkResponse.drinks[0].strMeasure5;
+          var meas5 = drinkResponse.drinks[0].strMeasure6;
+          var meas6 = drinkResponse.drinks[0].strMeasure7;
+          var meas7 = drinkResponse.drinks[0].strMeasure8;
+          var meas8 = drinkResponse.drinks[0].strMeasure9;
+          var meas9 = drinkResponse.drinks[0].strMeasure10;
+          var qIngr = [ingr0, ingr1, ingr2, ingr3, ingr4, ingr5, ingr6, ingr7, ingr8, ingr9];
+          var qMeas = [meas0, meas1, meas2, meas3, meas4, meas5, meas6, meas7, meas8, meas9]
+          for (y = 0; y < 3; y++) {
+            $("#cul-2").append("<li>" + qMeas[y] + " " + qIngr[y] + "</li>");
+          }
+        })
         countStart++;
         $("#card2").show();
       } else if (x === 2 && countStart < drinkLen) {
         $("#cimg-3").attr('src', storeResponse.drinks[countStart].strDrinkThumb);
         $('#ccont-3').text(storeResponse.drinks[countStart].strDrink);
         console.log("inside 3");
-        // // var ingCount = storeResponse.hits[countStart].recipe.ingredientLines.length; //Counts the ingridients included in the recipie.
-        // // for (var m = 0; m < ingCount; m++) { //This for loop is in charge of adding the lines of ingridients to the Card Reveal.
-        // //   $('#cul-3').text("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
-        // // };
+        var queryDrink = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + storeResponse.drinks[countStart].idDrink;
+        console.log(queryDrink);
+        $.ajax({
+          url: queryDrink,
+          method: "GET"
+        }).then(function(drinkResponse) {
+          var ingr0 = drinkResponse.drinks[0].strIngredient1;
+          var ingr1 = drinkResponse.drinks[0].strIngredient2;
+          var ingr2 = drinkResponse.drinks[0].strIngredient3;
+          var ingr3 = drinkResponse.drinks[0].strIngredient4;
+          var ingr4 = drinkResponse.drinks[0].strIngredient5;
+          var ingr5 = drinkResponse.drinks[0].strIngredient6;
+          var ingr6 = drinkResponse.drinks[0].strIngredient7;
+          var ingr7 = drinkResponse.drinks[0].strIngredient8;
+          var ingr8 = drinkResponse.drinks[0].strIngredient9;
+          var ingr9 = drinkResponse.drinks[0].strIngredient10;
+          var meas0 = drinkResponse.drinks[0].strMeasure1;
+          var meas1 = drinkResponse.drinks[0].strMeasure2;
+          var meas2 = drinkResponse.drinks[0].strMeasure3;
+          var meas3 = drinkResponse.drinks[0].strMeasure4;
+          var meas4 = drinkResponse.drinks[0].strMeasure5;
+          var meas5 = drinkResponse.drinks[0].strMeasure6;
+          var meas6 = drinkResponse.drinks[0].strMeasure7;
+          var meas7 = drinkResponse.drinks[0].strMeasure8;
+          var meas8 = drinkResponse.drinks[0].strMeasure9;
+          var meas9 = drinkResponse.drinks[0].strMeasure10;
+          var qIngr = [ingr0, ingr1, ingr2, ingr3, ingr4, ingr5, ingr6, ingr7, ingr8, ingr9];
+          var qMeas = [meas0, meas1, meas2, meas3, meas4, meas5, meas6, meas7, meas8, meas9]
+          for (y = 0; y < 3; y++) {
+            $("#cul-3").append("<li>" + qMeas[y] + " " + qIngr[y] + "</li>");
+          }
+        })
         countStart++;
         $("#card3").show();
       }
     }
-      general.mlButton();
+
+    general.mlButton();
 
   },
 };
-//Execute the start function
-general.start();
-
 
 
 $('#food-button').click(function() {
@@ -203,6 +297,12 @@ $("#lessButton").on("click", function() {
   general.less();
 });
 
+
+// ref google login button.
+$("#googleLogin").on("click", function() {
+  googleLogin();
+});
+
 // });
 
 $('.sidenav').sidenav({
@@ -220,9 +320,6 @@ $('.sidenav').sidenav({
 // $('.sidenav').sidenav('hide');
 // // Destroy sideNav
 // $('.sidenav').sidenav('destroy');
-
-
-
 
 
 $('.chips').chips();
@@ -248,7 +345,3 @@ $('.chips-placeholder').chips({
 //   edge: 'right',
 //   closeOnClick: true
 // });
-
-
-//****************************************************************************************//
-//************************************API's***********************************************//
