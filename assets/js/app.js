@@ -262,10 +262,12 @@ var drinks = {
         $("#card3").show();
       }
     }
+
     general.mlButton();
 
   },
 };
+
 
 $('#food-button').click(function() {
   type = "food";
@@ -318,6 +320,7 @@ $('.sidenav').sidenav({
 // $('.sidenav').sidenav('hide');
 // // Destroy sideNav
 // $('.sidenav').sidenav('destroy');
+
 
 $('.chips').chips();
 $('.chips-placeholder').chips({
