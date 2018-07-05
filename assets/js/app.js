@@ -5,6 +5,7 @@ var storeDrinks;
 var countStart = 0;
 var cPrinted = 0;
 var type = "";
+var trending = [];
 
 $('#main-container').hide();
 $("#card1").hide();
@@ -14,37 +15,85 @@ $('#lessButton').hide();
 $('#moreButton').hide();
 $('.parallax').parallax();
 
-    //Saved to firebase
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyA4z9UNz-9YYl6NIOOX9r7e78bXl8n0kFs",
-    authDomain: "flayvor-700bf.firebaseapp.com",
-    databaseURL: "https://flayvor-700bf.firebaseio.com",
-    projectId: "flayvor-700bf",
-    storageBucket: "flayvor-700bf.appspot.com",
-    messagingSenderId: "16945531953"
-  };
-  firebase.initializeApp(config);
-  var database = firebase.database();
+//Saved to firebase
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyA4z9UNz-9YYl6NIOOX9r7e78bXl8n0kFs",
+  authDomain: "flayvor-700bf.firebaseapp.com",
+  databaseURL: "https://flayvor-700bf.firebaseio.com",
+  projectId: "flayvor-700bf",
+  storageBucket: "flayvor-700bf.appspot.com",
+  messagingSenderId: "16945531953"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
 
-  function googleLogin() {
-// Start a sign in process for an unauthenticated user.
-var provider = new firebase.auth.GoogleAuthProvider();
-provider.addScope('profile');
-provider.addScope('email');
-// ---------------POPUP-------------------------
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-        var user = result.user;
-        var token = result.credential.accessToken;
+function googleLogin() {
+  // Start a sign in process for an unauthenticated user.
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('profile');
+  provider.addScope('email');
+  // ---------------POPUP-------------------------
+  firebase.auth().signInWithPopup(provider).then(function (result) {
+    var user = result.user;
+    var token = result.credential.accessToken;
 
-        document.write("Hello ${user.displayName}");
-        console.log(user)
-        console.log(token)
-      });
+    document.write("Hello ${user.displayName}");
+    console.log(user)
+    console.log(token)
+  });
+}
+
+//------------------firebase-----------------------
+
+var topRecipes = {
+
+  read: function () {
+
+    database.ref().on('child_added', function (snapshot) {
+
+      var ingredient1 = snapshot.val().ingredient;
+
+
+      $("#userEmail").append("<p>" + ingredient1 + "</p>");
+    });
+
+  },
+
+write: function () {
+
+  var ingredientFb = $("#ingredients").val().trim();
+    console.log(ingredientFb);
+
+    var savedSerch = {
+      ingredient: ingredientFb
+    }
+
+    database.ref().push(savedSerch);
+
+    // trending.on('value', function (snapshot) {
+    //   snapshot.forEach(function (trend) {
+    //     trending.push({
+    //       ip: trend.key,
+    //       ingredient: trend.val()
+    //     });
+
+    //   })
+
+    // })
+
   }
 
+}
+
+topRecipes.read();
+
+
+
+
+
 var general = {
-  mlButton: function() {
+  mlButton: function () {
     if (countStart === 0) {
       $('#lessButton').hide();
       $('#moreButton').hide();
@@ -56,7 +105,7 @@ var general = {
       $('#moreButton').show();
     }
   },
-  more: function() { //Shows 3 more recipies.
+  more: function () { //Shows 3 more recipies.
     if (type === "food") {
       food.print()();
     } else {
@@ -64,7 +113,7 @@ var general = {
     }
   },
 
-  less: function() {
+  less: function () {
     countStart -= 6;
     if (type === "food") {
       food.print()();
@@ -75,7 +124,7 @@ var general = {
 }
 
 var food = {
-  pull: function() {
+  pull: function () {
     countStart = 0; //Returns countStart to 0
     var ingredients = $("#ingredients").val(); //Assign text typed by user to variable ingridients.
     var Uri = " https://api.edamam.com/search?q=" //Default start of API Url
@@ -86,13 +135,13 @@ var food = {
     $.ajax({ //Using ajax to get the json that contains the recipies.
       url: queryUrl,
       method: "GET"
-    }).then(function(response) { //Stores the JSON obtained in the temp variable "response"
+    }).then(function (response) { //Stores the JSON obtained in the temp variable "response"
       storeResponse = response; //Saves JSON response to local variable in case we need to use response in the future.
       console.log(storeResponse);
       food.print(); //Calls the "printer"
     })
   },
-  print: function() {
+  print: function () {
     $("#cimg-1").attr("src", storeResponse.hits[countStart].recipe.image);
     $('#ccont-1').text(storeResponse.hits[countStart].recipe.label);
     var ingCount = storeResponse.hits[countStart].recipe.ingredientLines.length; //Counts the ingridients included in the recipie.
@@ -122,7 +171,7 @@ var food = {
 };
 
 var drinks = {
-  pull: function() {
+  pull: function () {
     countStart = 0; //Reset Start Count to 0.
     cPrinted = 0;
     var ingredients = $("#ingredients").val().trim(); //Get the ingridients typed by user.
@@ -133,13 +182,13 @@ var drinks = {
     $.ajax({ //Using ajax to get the json that contains the recipies.
       url: queryUrl,
       method: "GET"
-    }).then(function(response) { //Stores the JSON obtained in the temp variable "response"
+    }).then(function (response) { //Stores the JSON obtained in the temp variable "response"
       storeResponse = response; //Saves JSON response to local variable in case we need to use response in the future.
       console.log(storeResponse); //Console log the JSON.
       drinks.print(); //Calls the "printer"
     });
   },
-  print: function() {
+  print: function () {
     $("#card1").hide();
     $("#card2").hide();
     $("#card3").hide();
@@ -155,7 +204,7 @@ var drinks = {
         $.ajax({
           url: queryDrink,
           method: "GET"
-        }).then(function(drinkResponse) {
+        }).then(function (drinkResponse) {
           var ingr0 = drinkResponse.drinks[0].strIngredient1;
           var ingr1 = drinkResponse.drinks[0].strIngredient2;
           var ingr2 = drinkResponse.drinks[0].strIngredient3;
@@ -193,7 +242,7 @@ var drinks = {
         $.ajax({
           url: queryDrink,
           method: "GET"
-        }).then(function(drinkResponse) {
+        }).then(function (drinkResponse) {
           var ingr0 = drinkResponse.drinks[0].strIngredient1;
           var ingr1 = drinkResponse.drinks[0].strIngredient2;
           var ingr2 = drinkResponse.drinks[0].strIngredient3;
@@ -231,7 +280,7 @@ var drinks = {
         $.ajax({
           url: queryDrink,
           method: "GET"
-        }).then(function(drinkResponse) {
+        }).then(function (drinkResponse) {
           var ingr0 = drinkResponse.drinks[0].strIngredient1;
           var ingr1 = drinkResponse.drinks[0].strIngredient2;
           var ingr2 = drinkResponse.drinks[0].strIngredient3;
@@ -269,37 +318,38 @@ var drinks = {
 };
 
 
-$('#food-button').click(function() {
+$('#food-button').click(function () {
   type = "food";
   console.log(type);
   $("#main-container").show();
 });
 
-$('#drink-button').click(function() {
+$('#drink-button').click(function () {
   type = "drinks";
   console.log(type);
   $("#main-container").show();
 });
 
-$('#flavorize-button').click(function() {
+$('#flavorize-button').click(function () {
   if (type === "food") {
     food.pull();
   } else {
     drinks.pull();
   }
+  topRecipes.write();
 });
 
-$("#moreButton").on("click", function() {
+$("#moreButton").on("click", function () {
   general.more();
 });
 
-$("#lessButton").on("click", function() {
+$("#lessButton").on("click", function () {
   general.less();
 });
 
 
 // ref google login button.
-$("#googleLogin").on("click", function() {
+$("#googleLogin").on("click", function () {
   googleLogin();
 });
 
