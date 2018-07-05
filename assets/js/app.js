@@ -49,7 +49,7 @@ var topRecipes = {
 
   read: function () {
 
-    database.ref().on('child_added', function (snapshot) {
+    database.ref().limitToFirst(5).on('child_added', function (snapshot) {
 
       var ingredient1 = snapshot.val().ingredient;
 
@@ -76,12 +76,11 @@ write: function () {
 }
 
 function snapshotToArray(snapshot) {
+
   var returnArr = [];
 
   snapshot.forEach(function(childSnapshot) {
-    var item = childSnapshot.val();
-    item.key = childSnapshot.key;
-
+    var item = childSnapshot.val().ingredient;
     returnArr.push(item);
 
   });
@@ -90,8 +89,13 @@ function snapshotToArray(snapshot) {
 
 };
 
-firebase.database().ref().on("value", function(snapshot){
+firebase.database().ref().limitToLast(5).on("value", function(snapshot) {
+
   console.log(snapshotToArray(snapshot));
+
+  $("#userName").append("<p>" + snapshotToArray(snapshot) + "</p>");
+
+
 
 })
 
