@@ -5,7 +5,6 @@ var storeDrinks;
 var countStart = 0;
 var cPrinted = 0;
 var type = "";
-var trending = [];
 
 $('#main-container').hide();
 $("#card1").hide();
@@ -56,6 +55,8 @@ var topRecipes = {
 
 
       $("#userEmail").append("<p>" + ingredient1 + "</p>");
+
+
     });
 
   },
@@ -70,21 +71,29 @@ write: function () {
     }
 
     database.ref().push(savedSerch);
-
-    // trending.on('value', function (snapshot) {
-    //   snapshot.forEach(function (trend) {
-    //     trending.push({
-    //       ip: trend.key,
-    //       ingredient: trend.val()
-    //     });
-
-    //   })
-
-    // })
-
   }
 
 }
+
+function snapshotToArray(snapshot) {
+  var returnArr = [];
+
+  snapshot.forEach(function(childSnapshot) {
+    var item = childSnapshot.val();
+    item.key = childSnapshot.key;
+
+    returnArr.push(item);
+
+  });
+
+  return returnArr;
+
+};
+
+firebase.database().ref().on("value", function(snapshot){
+  console.log(snapshotToArray(snapshot));
+
+})
 
 topRecipes.read();
 
