@@ -66,11 +66,11 @@ write: function () {
   var ingredientFb = $("#ingredients").val().trim();
     console.log(ingredientFb);
 
-    var savedSerch = {
+    var savedSearch = {
       ingredient: ingredientFb
     }
 
-    database.ref().push(savedSerch);
+    database.ref().push(savedSearch);
   }
 
 }
@@ -82,21 +82,13 @@ function snapshotToArray(snapshot) {
   snapshot.forEach(function(childSnapshot) {
     var item = childSnapshot.val().ingredient;
     returnArr.push(item);
-
   });
-
   return returnArr;
-
 };
-
 firebase.database().ref().limitToLast(5).on("value", function(snapshot) {
-
-  console.log(snapshotToArray(snapshot));
-
-  $("#userName").append("<p>" + snapshotToArray(snapshot) + "</p>");
-
-
-
+  var topTrend = snapshotToArray(snapshot);
+  console.log(topTrend);
+  $("#userName").append("<p>" + topTrend + "</p>");
 })
 
 topRecipes.read();
