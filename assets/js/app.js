@@ -92,7 +92,7 @@ var topRecipes = {
       console.log(topTrend);
 
       for (var i = 0; i < topTrend.length; i++) {
-        if (topTrend[i + 1] == topTrend[i]) {
+        if (topTrend[i + 2] == topTrend[i]) {
           $("#userName").append("<p>" + topTrend[i] + "</p>");
         }
       }
