@@ -45,7 +45,7 @@ function googleLogin() {
 
 //------------------firebase-----------------------
 
-var topRecipes = {
+var historySearch = {
 
   read: function () {
 
@@ -59,9 +59,9 @@ var topRecipes = {
 
   },
 
-write: function () {
+  write: function () {
 
-  var ingredientFb = $("#ingredients").val().trim();
+    var ingredientFb = $("#ingredients").val().trim();
     console.log(ingredientFb);
 
     var savedSearch = {
@@ -72,28 +72,36 @@ write: function () {
 
 }
 
-function snapshotToArray(snapshot) {
+var topRecipes = {
 
-  var returnArr = [];
+  write: function () {
 
-  snapshot.forEach(function(childSnapshot) {
-    var item = childSnapshot.val().ingredient;
-    returnArr.push(item);
-  });
-  return returnArr;
-};
-firebase.database().ref().limitToFirst(5).on("value", function(snapshot) {
-  var topTrend = snapshotToArray(snapshot);
-  console.log(topTrend);
+    function snapshotToArray(snapshot) {
 
-  for (var i = 0; i < topTrend.length - 1; i++ ) {
-    if (topTrend[i + 1] == topTrend[i]) {
-      $("#userName").append("<p>" + topTrend[i] + "</p>");
-    }
+      var returnArr = [];
+
+      snapshot.forEach(function (childSnapshot) {
+        var item = childSnapshot.val().ingredient;
+        returnArr.push(item);
+      });
+      return returnArr;
+    };
+
+    firebase.database().ref().on("value", function (snapshot) {
+      var topTrend = snapshotToArray(snapshot);
+      console.log(topTrend);
+
+      for (var i = 0; i < topTrend.length -1; i++) {
+        if (topTrend[i + 1] == topTrend[i]) {
+          $("#userName").append("<p>" + topTrend[i] + "</p>");
+        }
+      }
+    })
+
   }
-})
-
-topRecipes.read();
+}
+topRecipes.write();
+historySearch.read();
 
 
 
@@ -184,7 +192,6 @@ var drinks = {
     var ingredients = $("#ingredients").val().trim(); //Get the ingridients typed by user.
     var uri = "https://thecocktaildb.com/api/json/v1/1/filter.php?i="; //Base QueryURL.
     var queryUrl = uri + ingredients; //Merge variables to create Query URL.
-    $("#ingredients").val(""); //Clears user typed recipies.
     console.log(queryUrl); //Console the QueryURL.
     $.ajax({ //Using ajax to get the json that contains the recipies.
       url: queryUrl,
@@ -343,7 +350,8 @@ $('#flavorize-button').click(function () {
   } else {
     drinks.pull();
   }
-  topRecipes.write();
+  historySearch.write();
+  $("#ingredients").val(""); //Clears user typed recipies.
 });
 
 $("#moreButton").on("click", function () {
@@ -369,7 +377,6 @@ $('.sidenav').sidenav({
   draggable: true,
   // onOpen: function(el)
   // onClose: function(el)
-
 });
 // // Show sideNav
 // $('.sidenav').sidenav('show');
@@ -383,6 +390,7 @@ $('.chips').chips();
 $('.chips-placeholder').chips({
   placeholder: 'Add ingredient...',
   secondaryPlaceholder: 'add more...',
+  
 });
 
 
