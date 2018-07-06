@@ -91,7 +91,7 @@ var topRecipes = {
       var topTrend = snapshotToArray(snapshot);
       console.log(topTrend);
 
-      for (var i = 0; i < topTrend.length -1; i++) {
+      for (var i = 0; i < topTrend.length; i++) {
         if (topTrend[i + 1] == topTrend[i]) {
           $("#userName").append("<p>" + topTrend[i] + "</p>");
         }
