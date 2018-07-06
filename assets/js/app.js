@@ -49,13 +49,11 @@ var topRecipes = {
 
   read: function () {
 
-    database.ref().limitToFirst(5).on('child_added', function (snapshot) {
+    database.ref().limitToLast(5).on('child_added', function (snapshot) {
 
       var ingredient1 = snapshot.val().ingredient;
 
-
       $("#userEmail").append("<p>" + ingredient1 + "</p>");
-
 
     });
 
@@ -69,7 +67,6 @@ write: function () {
     var savedSearch = {
       ingredient: ingredientFb
     }
-
     database.ref().push(savedSearch);
   }
 
@@ -85,10 +82,15 @@ function snapshotToArray(snapshot) {
   });
   return returnArr;
 };
-firebase.database().ref().limitToLast(5).on("value", function(snapshot) {
+firebase.database().ref().limitToFirst(5).on("value", function(snapshot) {
   var topTrend = snapshotToArray(snapshot);
   console.log(topTrend);
-  $("#userName").append("<p>" + topTrend + "</p>");
+
+  for (var i = 0; i < topTrend.length - 1; i++ ) {
+    if (topTrend[i + 1] == topTrend[i]) {
+      $("#userName").append("<p>" + topTrend[i] + "</p>");
+    }
+  }
 })
 
 topRecipes.read();
