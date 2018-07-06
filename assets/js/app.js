@@ -16,6 +16,35 @@ $('#lessButton').hide();
 $('#moreButton').hide();
 $('.parallax').parallax();
 
+//Saved to firebase
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyA4z9UNz-9YYl6NIOOX9r7e78bXl8n0kFs",
+  authDomain: "flayvor-700bf.firebaseapp.com",
+  databaseURL: "https://flayvor-700bf.firebaseio.com",
+  projectId: "flayvor-700bf",
+  storageBucket: "flayvor-700bf.appspot.com",
+  messagingSenderId: "16945531953"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
+
+function googleLogin() {
+  // Start a sign in process for an unauthenticated user.
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('profile');
+  provider.addScope('email');
+  // ---------------POPUP-------------------------
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+    var user = result.user;
+    var token = result.credential.accessToken;
+
+    document.write("Hello ${user.displayName}");
+    console.log(user)
+    console.log(token)
+  });
+}
+
 var general = {
   mlButton: function() {
     if (countStart === 0) {
@@ -175,8 +204,8 @@ var drinks = {
       cardImg.append(cardImgSrc);
       cardCont.attr('class', 'card-content');
       cardContSp.attr('class', 'card-title activator grey-text text-darken-4');
-      cardContSp.attr('id','drinkName-'+ countStart);
-      cardContSp.attr('drinkN',storeResponse.drinks[countStart].strDrink);
+      cardContSp.attr('id', 'drinkName-' + countStart);
+      cardContSp.attr('drinkN', storeResponse.drinks[countStart].strDrink);
       cardContSp.append(storeResponse.drinks[countStart].strDrink + '<i class="material-icons right">more_vert</i>');
       // cardContUrl.append('<a href="#">Full Recipe & Instructions.</a>');
       cardCont.append(cardContSp);
@@ -212,10 +241,10 @@ var drinks = {
       for (countStart; countStart < countEnd; countStart++) {
 
         console.log(g, h)
-        for(g; g<h; g++){
-          var dName= $("#drinkName-"+countStart).attr("drinkN");
-          var evaluator = storeDrinks[g].drinks[0].strDrink + "more_vert";
-          if(dName === evaluator){
+        for (g; g < h; g++) {
+          var dName = $("#drinkName-" + countStart).attr("drinkN");
+          var evaluator = storeDrinks[g].drinks[0].strDrink;
+          if (dName === evaluator) {
             indNuber = g;
             console.log(indNuber);
           }
@@ -251,9 +280,13 @@ var drinks = {
         }
       }
     }, 1000);
+
     general.mlButton();
   }
+
+
 };
+
 
 $('#food-button').click(function() {
   type = "food";
@@ -284,6 +317,12 @@ $("#lessButton").on("click", function() {
   general.less();
 });
 
+
+// ref google login button.
+$("#googleLogin").on("click", function() {
+  googleLogin();
+});
+
 // });
 
 $('.sidenav').sidenav({
@@ -301,6 +340,7 @@ $('.sidenav').sidenav({
 // $('.sidenav').sidenav('hide');
 // // Destroy sideNav
 // $('.sidenav').sidenav('destroy');
+
 
 $('.chips').chips();
 $('.chips-placeholder').chips({

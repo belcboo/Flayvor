@@ -2,19 +2,12 @@
     box-sizing: border-box;
 }
 
-body {
-   /* background-color: #5B7C8B; */
-  /* background-image: url('../images/background.jpg'); */
-
-
-}
-
-
 #nav-bar {
-    background-color: #5B7C8B !important;
+    background-color: #5B7C8B;
     width: 100%;
-    height: 56px;
-    line-height: 56px;
+
+    height: 70px;
+    line-height: 46px;
 
     }
 
@@ -25,43 +18,233 @@ body {
 #nav-logo {
     font-family: 'Montserrat', sans-serif;
     font-size: 24px;
-
-
 }
 
 #slide-out-r {
     background-color: #5B7C8B;
 }
 
-#instructions {
 
-   padding: 20px;
-   background-color: #5B7C8B;
+/* parallax */
 
+#logo {
+    width: 50%;
 }
-
-/* .parallax-container {
-    height: 500px;
-  } */
-
-  /* .parallax img {
-      @media #{$small-and-down} {max-width: 200%;}
-    @media
-    } */
-
-/* #buttons-menu {
-    display: inline-block;
-    float: right;
-} */
 
 .parallax-container {
-    min-height: 750px;
-    width: 100%;
+    min-height: 380px;
     height: auto;
+    width: 100%;
+}
+
+.parallax img {
+    max-width: 600px;
+} 
+  
+
+#first-container {
+    background-color: #5B7C8B; 
+   
 
 }
 
+/* instructions */
 
+
+div#instructions.row {
+    padding: 25px;
+    background-color: #5B7C8B;  
+}
+
+
+#steps-img {
+    width: 205px;
+}
+
+#step-one {
+    position: relative;
+    left: 190px;
+  
+}
+
+#step-three {
+    position: relative;
+    right: 190px;
+     
+}
+
+
+
+@media only screen and (max-width : 1090px) {
+    #steps-img {
+        width: 175px;
+    }
+
+    #step-one {
+        position: relative;
+        left: 125px;
+    }
+
+    #step-three {
+        position: relative;
+        right: 125px;
+         
+    }
+
+}
+
+@media only screen and (max-width : 992px) {
+    .parallax-container {
+      position: absolute;
+      top: 40%;
+    }
+    #index-banner {
+      top: 10%;
+    }
+    #steps-img {
+        width: 150px;
+    }
+  
+         
+  }
+  
+  @media only screen and (max-width : 780px) {
+    #index-banner {
+      top: 0;
+    }
+    #steps-img {
+        width: 145px;
+    }
+    #step-one {
+        position: relative;
+        left: 25px;
+    }
+
+    #step-three {
+        position: relative;
+        right: 25px;
+
+  }
+  }
+
+  @media screen and (max-width: 460px) {
+    #steps-img {
+        width: 100px;
+    }
+    #step-one {
+        position: relative;
+        left: 5px;
+    }
+
+    #step-three {
+        position: relative;
+        right: 5px;
+
+  }
+
+  }
+
+
+/* food/drink buttons */
+
+
+#buttons-div {
+    background-color: #5B7C8B;
+    /* width: 50%; */
+    margin: 0 auto;
+    /* position: relative;
+    bottom: 75px; */
+ 
+}
+
+#first-question {
+    font-family: 'Muli', sans-serif;
+}
+
+#flavorize-button {
+    background-color: #5B7C8B;
+}
+
+/* search ingredients */
+
+#search-div {
+    background:#5B7C8B;
+    border: solid 15px #5B7C8B;
+}
+
+#search-bar {
+    background-color: white;
+    /* border-style: solid;
+    border-width: 7px; */
+    /* border-color: #5B7C8B; */
+}
+
+
+
+/* footer */
+
+footer {
+    margin: 0;
+    /* background-color: #A5A59F; */
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    background-color: #5B7C8B !important;
+    height: 100px;
+}
+
+
+.dot {
+    height: 55px;
+    width: 55px;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+  
+    z-index: 2;
+ 
+}
+
+.dot-shadow {
+    height: 55px;
+    width: 55px;
+    background-color: #9DB0B9;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    right: 5px;
+    z-index: 1;
+}
+
+/* .white-box {
+    background: white;
+    width: 750px;
+    margin: auto;
+    opacity: 0.5;
+} */
+
+
+/* 
+#window {
+    margin-right: auto;
+    margin-left: auto;
+} */
+
+#border-top {
+    background-color: white;
+    height: 3px; 
+
+}
+
+#contact-us {
+    background-color: white;
+}
+
+
+/* #raise {
+    position: relative;
+    bottom: 50px;
+} */
 
 /* @media only screen and (max-width : 992px) {
     .parallax-container .section {
@@ -92,28 +275,9 @@ body {
     height: 56px;
     margin: 0 18px;
   } */
-/* #start {
-    margin-top: 0px;
-    padding: 0px;
-} */
-
-#logo {
-    width: 50%;
-}
 
 
 
-#card-img {
-    background-image: url('');
-    background-color: blue;
-}
-
-#search-bar {
-    background-color: white;
-    border-style: solid;
-    border-width: 7px;
-    border-color: #5B7C8B;
-}
 /*
 @media only screen and (max-width: 992px) {
     #logo {
@@ -135,56 +299,18 @@ body {
     } */
 
 
-/* #header-img {
-    max-width: 600px;
-} */
-
-/* #buttons-window {
-    background-color: #5B7C8B;
-    height: 200px;
-    margin: auto;
-} */
-#window {
-    margin-right: auto;
-    margin-left: auto;
-}
-
-#buttons-start {
-    background-color: #5B7C8B !important;
-    display: inline-block;
-    width: 100%;
-    height: auto;
-    padding: 50px;
-
-}
-
-/* .instructions-icon {
-    max-width: 75px;
-
-} */
-
-#main-container {
-    background-color: #5B7C8B !important;
-}
-/* #bottom-parallax {
-    /* overflow: hidden visible; */
-    /* height: 667px;
 
 
-} */
 
-.icon {
+/* .icon {
     background-color: #cee1e9;
     opacity: 0.5;
-}
-
-#contact-us {
-    background-color: white;
-}
-
-/* table {
-    background-color: transparent;
 } */
+
+
+
+
+
 
 /* #top-recipes {
     width: 95%;
@@ -194,17 +320,3 @@ body {
 
 
 
-/* #contact-us {
-     background-color: #E9ECE5;
-}
-.main-container {
-    background-color: #E9ECE5;
-} */
-
-footer {
-    /* background-color: #A5A59F; */
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    background-color: #5B7C8B !important;
-    height: 100px;
-}
