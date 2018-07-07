@@ -77,8 +77,6 @@ $(document).ready(function () {
     firebase.auth().signInWithPopup(provider).then(function (result) {
       var user = result.user;
       var token = result.credential.accessToken;
-
-      document.write("Hello ${user.displayName}");
       console.log(user)
       console.log(token)
     });
@@ -131,7 +129,7 @@ $(document).ready(function () {
         console.log(topTrend);
 
         for (var i = 0; i < topTrend.length; i++) {
-          if (topTrend[i + 2] == topTrend[i]) {
+          if (topTrend[i + 3] == topTrend[i]) {
             $("#topIn").append("<p>" + topTrend[i] + "</p>");
           }
         }
@@ -139,6 +137,7 @@ $(document).ready(function () {
 
     }
   }
+  
   topRecipes.write();
   historySearch.read();
 
