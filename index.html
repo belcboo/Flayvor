@@ -8,12 +8,11 @@
   <title>Flayvor</title>
 
   <!-- CSS -->
+  <link type='text/css' rel='stylesheet' href='assets/css/style.css'>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Montserrat" rel="stylesheet">
   <!-- Import materialize -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
-  <link type='text/css' rel='stylesheet' href='assets/css/style.css'>
-
 
   <!--Firebase Script -->
   <script src='https://www.gstatic.com/firebasejs/4.12.0/firebase.js'></script>
@@ -23,7 +22,8 @@
 
   <nav id='nav-bar' role='navigation'>
     <div class='nav-wrapper'>
-      <a href="index.html" id='nav-logo' class='brand-logo'><img alt="flayvor.co_logo" src="assets/images/logo.png" height="60px"></a>
+      <!-- <a href="index.html" id='nav-logo' class='brand-logo'><img alt="flayvor.co_logo" src="assets/images/finalLogo.png" height="60px"></a> -->
+      <a href="index.html" id='nav-logo' class='brand-logo'>FLAYVOR</a>
       <ul class='sidenav right' id='slide-out-r'>
         <li>
           <div class="user-view">
@@ -42,20 +42,50 @@
     </div>
   </nav>
 
+  <div class='header'>
   <div id='index-banner' class='parallax-container'>
-    <!-- <img id='logo' class='responsive-img' src='assets/images/flayvor-logo-2.png'> -->
-    <h1>FLAYVOR</h1>
-      <div class="parallax"><img src="assets/images/blue-header.png" alt="Food and Drinks"></div>
+    <!-- <img id='logo' class='responsive-img center' src='assets/images/finalLogo.png'> -->
+      <div class="parallax"><img src="assets/images/blue-4.jpg" alt="Food and Drinks"></div>
   </div>
 
   <div class='center' id='first-container'>
+    <section id = 'white-border'>
     <div class='row center' id='instructions'>
+        <div id='buttons-div'>
+            <h5 class='white-text' id='first-question'>What are you in the mood for?</h5>
+
+            <input type='image' src='assets/images/food-button.png' id="food-button">
+
+            <input type='image' src='assets/images/drink-button.png' id="drink-button">
+          </div>
+      <img id='logo' class='center' src='assets/images/finalLogo-01.png'>
+    </section>
+    <!-- Modal Structure -->
+  <!-- <div id="modal1" class="modal">
+      <div class="modal-content">
+          <div class='center' id='search-div'>
+              <div class="container" id='search-bar'>
+
+                <input id="ingredients" type="text" class="center">
+              </div>
+              <br>
+              <button class='btn large' id='flavorize-button'>Flavorize</button>
+              <br><br>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+    </div> -->
+
+
+
+
+      <div class='row' id='stepsDiv'>
+
       <div class='col s4 m4' id='step-one'>
         <img id='steps-img' src='assets/images/steps-1.png'>
-              <!-- <span class='dot'><h5 class='step'>1</h5></span>
-              <span class='dot-shadow'></span>
-              <h5 class='step-number'><b class='instruction-bold'>FIRST</b> STEP</h5>
-              <p>Select a category</p>       -->
+
       </div>
 
       <div class='col s4 m4' id='step-two'>
@@ -65,20 +95,16 @@
       <div class='col s4 m4' id='step-three'>
         <img id='steps-img' src='assets/images/steps-3.png'>
       </div>
-    </div>
+      </div>
 
-    <div id='buttons-div'>
-      <h5 class='white-text' id='first-question'>What are you in the mood for?</h5>
-        <input type='image' src='assets/images/food-button.png' id="food-button">
-        <input type='image' src='assets/images/drink-button.png' id="drink-button">
-    </div>
-    <br><br>
+
+
   </div>
-
+  </div>
 
     <div class='center' id='search-div'>
       <div class="container" id='search-bar'>
-        <!-- <div class="chips chips-placeholder"></div> -->
+
         <input id="ingredients" type="text" class="center">
       </div>
       <br>
@@ -89,9 +115,9 @@
 
   <!-- ***************************CARDS TO DISPLAY RECIPES*************************** -->
 
-  <div class='parallax-container valign-wrapper'>
+  <div class='parallax-container'>
     <div class="row" id="top-recipes">
-      <!-- <div class="col s12 m4 l4">
+      <div class="col s12 m4 l4">
         <div class="card" id="card1">
           <div class="card-image waves-effect waves-block waves-light">
             <img id="cimg-1" class="activator" src="assets/images/ipsum.jpg">
@@ -108,9 +134,8 @@
           </div>
         </div>
       </div>
-       -->
 
-      <!-- <div class="col s12 m4 l4">
+      <div class="col s12 m4 l4">
         <div class="card" id="card2">
           <div class="card-image waves-effect waves-block waves-light">
             <img id="cimg-2" class="activator" src="assets/images/ipsum.jpg">
@@ -144,10 +169,10 @@
             </p>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
 
-    <div class="parallax"><img class='responsive-img' src="assets/images/blue-3.jpg" alt="Food and Drinks"></div>
+    <div class="parallax"><img class='responsive-img' src="assets/images/blue-2.jpgz" alt="Food and Drinks"></div>
   </div>
   <div class="row">
     <div class="col s12 center">
@@ -156,25 +181,25 @@
     </div>
   </div>
 
-  <div class='row' id='contact-us'>
+  <!-- <div class='row' id='contact-us'>
     <div class='col s12 center'>
       <br><br>
       <h4>Contact Us</h4>
       <p class='center'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim in laboriosam repudiandae commodi dignissimos iure mollitia explicabo voluptate modi quis molestias nostrum animi reprehenderit, minima, eveniet omnis minus assumenda doloremque.</p>
       <br><br>
     </div>
-  </div>
+  </div> -->
 
-  <div class="parallax-container valign-wrapper" id='bottom-parallax'>
-    <div class="section no-pad-bot">
+  <!-- <div class="parallax-container valign-wrapper" id='bottom-parallax'>
+    <div class="no-pad-bot">
       <div class="container">
         <div class="row center">
           <h5 class="header col s12 light"></h5>
         </div>
       </div>
     </div>
-    <div class="parallax"><img src="assets/images/blue-2.jpg" alt="Ingredients" class='responsive-img'></div>
-  </div>
+    <div class="parallax"><img src="assets/images/blue-4.png" alt="Ingredients" class='responsive-img'></div>
+  </div> -->
 
   <footer class='page-footer'>
     <div class='footer-container center'>
