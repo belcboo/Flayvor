@@ -33,18 +33,18 @@
 
 .parallax-container {
     min-height: 380px;
-    height: auto;
+    height: 700px;
     width: 100%;
 }
 
 .parallax img {
     max-width: 600px;
-} 
-  
+}
+
 
 #first-container {
-    background-color: #5B7C8B; 
-   
+    background-color: #5B7C8B;
+
 
 }
 
@@ -53,7 +53,7 @@
 
 div#instructions.row {
     padding: 25px;
-    background-color: #5B7C8B;  
+    background-color: #5B7C8B;
 }
 
 
@@ -64,13 +64,13 @@ div#instructions.row {
 #step-one {
     position: relative;
     left: 190px;
-  
+
 }
 
 #step-three {
     position: relative;
     right: 190px;
-     
+
 }
 
 
@@ -88,7 +88,7 @@ div#instructions.row {
     #step-three {
         position: relative;
         right: 125px;
-         
+
     }
 
 }
@@ -104,10 +104,10 @@ div#instructions.row {
     #steps-img {
         width: 150px;
     }
-  
-         
+
+
   }
-  
+
   @media only screen and (max-width : 780px) {
     #index-banner {
       top: 0;
@@ -154,7 +154,7 @@ div#instructions.row {
     margin: 0 auto;
     /* position: relative;
     bottom: 75px; */
- 
+
 }
 
 #first-question {
@@ -200,9 +200,9 @@ footer {
     border-radius: 50%;
     display: inline-block;
     position: absolute;
-  
+
     z-index: 2;
- 
+
 }
 
 .dot-shadow {
@@ -224,7 +224,7 @@ footer {
 } */
 
 
-/* 
+/*
 #window {
     margin-right: auto;
     margin-left: auto;
@@ -232,7 +232,7 @@ footer {
 
 #border-top {
     background-color: white;
-    height: 3px; 
+    height: 3px;
 
 }
 
@@ -317,6 +317,3 @@ footer {
     margin: 0 auto;
 
     /* background-image: url('../images/background.jpg');  */
-
-
-

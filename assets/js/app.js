@@ -8,6 +8,7 @@ var countStart = 0;
 var countEnd = 3;
 var type = "";
 
+
 $('#main-container').hide();
 $("#card1").hide();
 $("#card2").hide();
@@ -15,35 +16,6 @@ $("#card3").hide();
 $('#lessButton').hide();
 $('#moreButton').hide();
 $('.parallax').parallax();
-
-//Saved to firebase
-// Initialize Firebase
-var config = {
-  apiKey: "AIzaSyA4z9UNz-9YYl6NIOOX9r7e78bXl8n0kFs",
-  authDomain: "flayvor-700bf.firebaseapp.com",
-  databaseURL: "https://flayvor-700bf.firebaseio.com",
-  projectId: "flayvor-700bf",
-  storageBucket: "flayvor-700bf.appspot.com",
-  messagingSenderId: "16945531953"
-};
-firebase.initializeApp(config);
-var database = firebase.database();
-
-function googleLogin() {
-  // Start a sign in process for an unauthenticated user.
-  var provider = new firebase.auth.GoogleAuthProvider();
-  provider.addScope('profile');
-  provider.addScope('email');
-  // ---------------POPUP-------------------------
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-    var user = result.user;
-    var token = result.credential.accessToken;
-
-    document.write("Hello ${user.displayName}");
-    console.log(user)
-    console.log(token)
-  });
-}
 
 var general = {
   mlButton: function() {
@@ -66,7 +38,8 @@ var general = {
     if (type === "food") {
       food.print();
     } else {
-      drinks.print();
+      storeDrinks = [];
+      drinks.pullRecipes();
     }
   },
 
@@ -76,7 +49,8 @@ var general = {
     if (type === "food") {
       food.print()();
     } else {
-      drinks.print();
+      storeDrinks = [];
+      drinks.pullRecipes();
     }
   }
 }
@@ -166,16 +140,17 @@ var drinks = {
     }).then(function(response) { //Stores the JSON obtained in the temp variable "response"
       storeResponse = response; //Saves JSON response to local variable in case we need to use response in the future.
       console.log(storeResponse); //Console log the JSON.
-      drinks.print(); //Calls the "printer"
+      drinks.pullRecipes(); //Calls the "printer"
     });
   },
-  print: function() {
 
-    $("#top-recipes").empty(); //Cleans DIV where car's are gonna be generated
+  pullRecipes: function() {
+    var counta = countStart
+    var countb = countEnd;
+    console.log(counta, countb);
+    for (counta; counta < countb; counta++) { //Runs a defined amount of times to create Cards.
 
-    for (countStart; countStart < countEnd; countStart++) { //Runs a defined amount of times to create Cards.
-
-      var queryDrink = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + storeResponse.drinks[countStart].idDrink;
+      var queryDrink = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + storeResponse.drinks[counta].idDrink;
       console.log(queryDrink);
       $.ajax({
         url: queryDrink,
@@ -184,6 +159,14 @@ var drinks = {
         storeDrinks.push(drinkResponse);
         console.log(storeDrinks);
       });
+    }
+    //Cleans DIV where car's are gonna be generated
+    drinks.print();
+  },
+
+  print: function() {
+    $("#top-recipes").empty();
+    for (countStart; countStart < countEnd; countStart++) {
       var col = $("<div>");
       var card = $("<div>");
       var cardImg = $("<div>");
@@ -195,7 +178,6 @@ var drinks = {
       var cardRevSp = $("<span>");
       var cardRevP = $("<p>");
       var cardRevUl = $("<ul>");
-
       col.attr('class', "col s12 m4 l4");
       card.attr('class', "card");
       cardImg.attr('class', "card-image waves-effect waves-block waves-light");
@@ -205,53 +187,39 @@ var drinks = {
       cardCont.attr('class', 'card-content');
       cardContSp.attr('class', 'card-title activator grey-text text-darken-4');
       cardContSp.attr('id', 'drinkName-' + countStart);
-      cardContSp.attr('drinkN', storeResponse.drinks[countStart].strDrink);
+      cardContSp.attr('drinkn', storeResponse.drinks[countStart].strDrink);
       cardContSp.append(storeResponse.drinks[countStart].strDrink + '<i class="material-icons right">more_vert</i>');
-      // cardContUrl.append('<a href="#">Full Recipe & Instructions.</a>');
       cardCont.append(cardContSp);
-      // cardCont.append(cardContUrl);
       cardRev.attr('class', 'card-reveal');
       cardRevSp.attr('class', 'card-title grey-text text-darken-4');
       cardRevSp.append('Ingredients<i class="material-icons right">close</i>');
       cardRevUl.attr('id', 'list-' + [counter]);
-
-
       cardRevP.append(cardRevUl);
       cardRev.append(cardRevSp);
       cardRev.append(cardRevP);
-
       card.append(cardImg);
       card.append(cardCont);
       card.append(cardRev);
-
       col.append(card);
-
       $("#top-recipes").append(col);
       counter++;
     }
-    drinks.List();
+    countStart -= 3;
+    drinks.list();
   },
 
-  List: function() {
-    var g = countEnd - 3;;
-    var h = countEnd;
+  list: function() {
     setTimeout(function() {
-      countStart -= 3;
-
       for (countStart; countStart < countEnd; countStart++) {
-
-        console.log(g, h)
+        var g = 0;
+        var h = 3;
         for (g; g < h; g++) {
-          var dName = $("#drinkName-" + countStart).attr("drinkN");
+          var dName = $("#drinkName-" + countStart).attr("drinkn");
           var evaluator = storeDrinks[g].drinks[0].strDrink;
           if (dName === evaluator) {
             indNuber = g;
-            console.log(indNuber);
           }
-          console.log(indNuber, g, h, dName, evaluator);
         }
-
-
         var ingr0 = storeDrinks[indNuber].drinks[0].strIngredient1;
         var ingr1 = storeDrinks[indNuber].drinks[0].strIngredient2;
         var ingr2 = storeDrinks[indNuber].drinks[0].strIngredient3;
@@ -272,30 +240,27 @@ var drinks = {
         var meas7 = storeDrinks[indNuber].drinks[0].strMeasure8;
         var meas8 = storeDrinks[indNuber].drinks[0].strMeasure9;
         var meas9 = storeDrinks[indNuber].drinks[0].strMeasure10;
-        var qIngr = [ingr0, ingr1, ingr2, ingr3, ingr4, ingr5, ingr6, ingr7, ingr8, ingr9];
-        var qMeas = [meas0, meas1, meas2, meas3, meas4, meas5, meas6, meas7, meas8, meas9]
+        var Ingr = [ingr0, ingr1, ingr2, ingr3, ingr4, ingr5, ingr6, ingr7, ingr8, ingr9];
+        var Meas = [meas0, meas1, meas2, meas3, meas4, meas5, meas6, meas7, meas8, meas9]
         for (y = 0; y < 10; y++) {
-          $("#list-" + countStart).append("<li>" + qMeas[y] + " " + qIngr[y] + "</li>");
-          console.log(countStart);
+          $("#list-" + countStart).append("<li>" + Meas[y] + " " + Ingr[y] + "</li>");
         }
       }
-    }, 1000);
-
-    general.mlButton();
-  }
-
-
+      general.mlButton();
+    }, 1000)
+  },
 };
-
 
 $('#food-button').click(function() {
   type = "food";
+  $("#top-recipes").empty();
   console.log(type);
   $("#main-container").show();
 });
 
 $('#drink-button').click(function() {
   type = "drinks";
+  $("#top-recipes").empty();
   console.log(type);
   $("#main-container").show();
 });
@@ -317,12 +282,6 @@ $("#lessButton").on("click", function() {
   general.less();
 });
 
-
-// ref google login button.
-$("#googleLogin").on("click", function() {
-  googleLogin();
-});
-
 // });
 
 $('.sidenav').sidenav({
@@ -340,7 +299,6 @@ $('.sidenav').sidenav({
 // $('.sidenav').sidenav('hide');
 // // Destroy sideNav
 // $('.sidenav').sidenav('destroy');
-
 
 $('.chips').chips();
 $('.chips-placeholder').chips({
