@@ -137,7 +137,7 @@ $(document).ready(function () {
 
     }
   }
-  
+
   topRecipes.write();
   historySearch.read();
 
@@ -151,7 +151,6 @@ $(document).ready(function () {
       var Uri = " https://api.edamam.com/search?q=" //Default start of API Url
       var Api = "&app_id=951c44a9&app_key=10fce9b48db6f70dd8fec5472069d5f7&from=0&to=30" //Default end of the API Url.
       var queryUrl = Uri + ingredients + Api; //Merge the start + the ingridients typed by user + the end of the API Url.
-      $("#ingredients").val(""); //Cleans input
       console.log(queryUrl);
       $.ajax({ //Using ajax to get the json that contains the recipies.
         url: queryUrl,
@@ -360,7 +359,8 @@ $(document).ready(function () {
       drinks.pull();
     }
     historySearch.write();
-    $("#ingredients").val(""); //Clears user typed recipies.
+
+    $("#ingredients").val("");
   });
 
   $("#moreButton").on("click", function () {
