@@ -236,6 +236,8 @@ var drinks = {
         for (y = 0; y < 10; y++) { //Print the right recipes to the card. **This part was a PITA!**
           $("#list-" + countStart).append("<li>" + Meas[y] + " " + Ingr[y] + "</li>");
         }
+        $("#list-" + countStart).append("<h5><p> Instructions </p></h5>")
+        $("#list-" + countStart).append("<p>" + storeDrinks[indNuber].drinks[0].strInstructions + "</p>")
       }
       general.mlButton(); //Calls function to display more or less button.
     }, 1000)
