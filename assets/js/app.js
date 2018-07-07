@@ -261,6 +261,7 @@ $('#drink-button').click(function() {
 });
 
 $('#flavorize-button').click(function() {
+  location.hash = "top-recipes";
   if (type === "food") {
     food.pull();
   } else {
