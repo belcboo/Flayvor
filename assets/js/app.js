@@ -10,9 +10,8 @@ var type = "";
 
 
 $('#main-container').hide();
-$("#card1").hide();
-$("#card2").hide();
-$("#card3").hide();
+$('#flavorize-button').hide();
+$('#search-div').hide();
 $('#lessButton').hide();
 $('#moreButton').hide();
 $('.parallax').parallax();
@@ -76,7 +75,6 @@ var food = {
   },
   print: function() {
     $("#top-recipes").empty(); //Cleans DIV where car's are gonna be generated
-
     for (countStart; countStart < countEnd; countStart++) { //Runs a defined amount of times to create Cards.
       var col = $("<div>");
       var card = $("<div>");
@@ -89,39 +87,36 @@ var food = {
       var cardRevSp = $("<span>");
       var cardRevP = $("<p>");
       var cardRevUl = $("<ul>");
-
-      col.attr('class', "col s12 m4 l4");
-      card.attr('class', "card");
-      cardImg.attr('class', "card-image waves-effect waves-block waves-light");
-      cardImgSrc.attr('class', 'activator');
-      cardImgSrc.attr('src', storeResponse.hits[countStart].recipe.image);
-      cardImg.append(cardImgSrc);
-      cardCont.attr('class', 'card-content');
+      col.attr('class', "col s12 m4 l4"); //Creates column
+      card.attr('class', "card"); //Creates div for card.
+      cardImg.attr('class', "card-image waves-effect waves-block waves-light"); //Add classes for Materialize CSS to the img div
+      cardImgSrc.attr('class', 'activator'); //Add classes to image Source.
+      cardImgSrc.attr('id','card-image'); //Adds ID to modify witdh on CSS.
+      cardImgSrc.attr('src', storeResponse.hits[countStart].recipe.image); //Adds url with source of image.
+      cardImg.append(cardImgSrc); //Append child div into the 'mother div'
+      cardCont.attr('class', 'card-content'); //Adds materialize classes.
       cardContSp.attr('class', 'card-title activator grey-text text-darken-4');
       cardContSp.append(storeResponse.hits[countStart].recipe.label + '<i class="material-icons right">more_vert</i>');
-      cardContUrl.append('<a href="#">Full Recipe & Instructions.</a>');
-      cardCont.append(cardContSp);
-      cardCont.append(cardContUrl);
-      cardRev.attr('class', 'card-reveal');
-      cardRevSp.attr('class', 'card-title grey-text text-darken-4');
-      cardRevSp.append('Ingredients<i class="material-icons right">close</i>');
+      cardContUrl.append('<a href="' + storeResponse.hits[countStart].recipe.url +'" target="_blank">Instructions.</a>');
+      cardCont.append(cardContSp); // Appends div inside 'mother div'
+      cardCont.append(cardContUrl); // Appends div inside 'mother div'
+      cardRev.attr('class', 'card-reveal'); //Adds classes of Materialize
+      cardRevSp.attr('class', 'card-title grey-text text-darken-4'); //Adds classes of Materialize
+      cardRevSp.append('Ingredients<i class="material-icons right">close</i>'); //Adds content as title to div.
       var ingCount = storeResponse.hits[countStart].recipe.ingredientLines.length; //Counts the ingridients included in the recipie.
       for (var m = 0; m < ingCount; m++) { //This for loop is in charge of adding the lines of ingridients to the Card Reveal.
         cardRevUl.append("<li>" + storeResponse.hits[countStart].recipe.ingredientLines[m] + "</li>");
       };
-      cardRevP.append(cardRevUl);
-      cardRev.append(cardRevSp);
-      cardRev.append(cardRevP);
-
-      card.append(cardImg);
-      card.append(cardCont);
-      card.append(cardRev);
-
-      col.append(card);
-
-      $("#top-recipes").append(col);
+      cardRevP.append(cardRevUl); //Appends div inside 'mother div'
+      cardRev.append(cardRevSp); //Appends div inside 'mother div'
+      cardRev.append(cardRevP); //Appends div inside 'mother div'
+      card.append(cardImg); //Adds all the 'mother divs' inside card Div
+      card.append(cardCont); //Adds all the 'mother divs' inside card Div
+      card.append(cardRev); //Adds all the 'mother divs' inside card Div
+      col.append(card); //Adds card div inside col div.
+      $("#top-recipes").append(col); //Adds cold div inside row.
     }
-    general.mlButton();
+    general.mlButton(); //Calls function to display more or less button.
   },
 };
 
@@ -145,29 +140,24 @@ var drinks = {
   },
 
   pullRecipes: function() {
-    var counta = countStart
-    var countb = countEnd;
-    console.log(counta, countb);
-    for (counta; counta < countb; counta++) { //Runs a defined amount of times to create Cards.
-
+    var counta = countStart //Assign value of general counters in order to avoid play with the general counter.
+    var countb = countEnd; //Assign value of general counters in order to avoid play with the general counter.
+    for (counta; counta < countb; counta++) { //Pulls the detailed recipe of each drink and store it inside an array.
       var queryDrink = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + storeResponse.drinks[counta].idDrink;
-      console.log(queryDrink);
       $.ajax({
         url: queryDrink,
         method: "GET"
       }).then(function(drinkResponse) {
         storeDrinks.push(drinkResponse);
-        console.log(storeDrinks);
       });
     }
-    //Cleans DIV where car's are gonna be generated
-    drinks.print();
+    drinks.print(); //Calls the printer function/
   },
 
   print: function() {
-    $("#top-recipes").empty();
-    for (countStart; countStart < countEnd; countStart++) {
-      var col = $("<div>");
+    $("#top-recipes").empty(); //Cleans div where recipes are gonna be printed.
+    for (countStart; countStart < countEnd; countStart++) { //Creates a card for each drink, includes image and name and all the internal code...
+      var col = $("<div>"); //...later process the addition of the ingridients. This function only uses the first pull.
       var card = $("<div>");
       var cardImg = $("<div>");
       var cardImgSrc = $("<img>");
@@ -182,6 +172,7 @@ var drinks = {
       card.attr('class', "card");
       cardImg.attr('class', "card-image waves-effect waves-block waves-light");
       cardImgSrc.attr('class', 'activator');
+      cardImgSrc.attr('id','card-image');
       cardImgSrc.attr('src', storeResponse.drinks[countStart].strDrinkThumb);
       cardImg.append(cardImgSrc);
       cardCont.attr('class', 'card-content');
@@ -204,20 +195,20 @@ var drinks = {
       $("#top-recipes").append(col);
       counter++;
     }
-    countStart -= 3;
-    drinks.list();
+    countStart -= 3; //Return count start to the value befor run this function.
+    drinks.list(); //Call the function that 'prints' the ingridients and recipes.
   },
 
   list: function() {
-    setTimeout(function() {
-      for (countStart; countStart < countEnd; countStart++) {
+    setTimeout(function() { //Adds a delay of 1 second in order to wait the second pull to finish. (1 Pull per drink).
+      for (countStart; countStart < countEnd; countStart++) { //This loop is in charge of print the recipes.
         var g = 0;
         var h = 3;
-        for (g; g < h; g++) {
-          var dName = $("#drinkName-" + countStart).attr("drinkn");
-          var evaluator = storeDrinks[g].drinks[0].strDrink;
-          if (dName === evaluator) {
-            indNuber = g;
+        for (g; g < h; g++) { //This for loop is in charge of validate the right recipe.
+          var dName = $("#drinkName-" + countStart).attr("drinkn"); //Pulls the name of the drink to add ingredients from a custom attr.
+          var evaluator = storeDrinks[g].drinks[0].strDrink; //Each run has a new name pulled from the 3 jsons pulled in pullRecpes.
+          if (dName === evaluator) { //Evalates which of the 3 recipes has the same name as the recipe to work.
+            indNuber = g; //Assign that value to inNumber (Number of index) and use it to assign value to the varibales below.
           }
         }
         var ingr0 = storeDrinks[indNuber].drinks[0].strIngredient1;
@@ -242,11 +233,11 @@ var drinks = {
         var meas9 = storeDrinks[indNuber].drinks[0].strMeasure10;
         var Ingr = [ingr0, ingr1, ingr2, ingr3, ingr4, ingr5, ingr6, ingr7, ingr8, ingr9];
         var Meas = [meas0, meas1, meas2, meas3, meas4, meas5, meas6, meas7, meas8, meas9]
-        for (y = 0; y < 10; y++) {
+        for (y = 0; y < 10; y++) { //Print the right recipes to the card. **This part was a PITA!**
           $("#list-" + countStart).append("<li>" + Meas[y] + " " + Ingr[y] + "</li>");
         }
       }
-      general.mlButton();
+      general.mlButton(); //Calls function to display more or less button.
     }, 1000)
   },
 };
@@ -254,15 +245,17 @@ var drinks = {
 $('#food-button').click(function() {
   type = "food";
   $("#top-recipes").empty();
+  $('#flavorize-button').show();
+  $('#search-div').show();
   console.log(type);
-  $("#main-container").show();
 });
 
 $('#drink-button').click(function() {
   type = "drinks";
   $("#top-recipes").empty();
+  $('#flavorize-button').show();
+  $('#search-div').show();
   console.log(type);
-  $("#main-container").show();
 });
 
 $('#flavorize-button').click(function() {
