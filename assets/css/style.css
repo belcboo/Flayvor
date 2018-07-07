@@ -41,20 +41,24 @@ header {
 #logo {
   width: 95%;
   position: absolute;
-  top: 25rem;
+  top: 28rem;
   left: 50%;
   transform: translate(-50%, -50%);
 
 }
 
 .parallax-container {
-    min-height: 550px;
-    height: 700px;
+    min-height: 700px;
+    height: auto;
     width: 100%;
 }
 
-.parallax img {
+/* .parallax img {
     max-width: 600px;
+} */
+
+.my-wrapper{
+  height: 100%;
 }
 
 
